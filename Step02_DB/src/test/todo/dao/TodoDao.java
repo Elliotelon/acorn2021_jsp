@@ -45,10 +45,73 @@ public class TodoDao {
 		return false;
 	}
 	public boolean delete(int num) {
-		return false;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		int flag = 0;
+		try {
+			conn = new DbcpBean().getConn();
+			//실행할 insert, update, delete 문 구성
+			String sql = "DELETE FROM todo WHERE num=?";
+			pstmt = conn.prepareStatement(sql);
+			//? 에 바인딩할 내용이 있으면 바인딩한다.
+			pstmt.setInt(1, num);
+			flag = pstmt.executeUpdate(); //sql 문 실행하고 변화된 row 갯수 리턴 받기
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+			}
+		}
+		if (flag > 0) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 	public TodoDto getData(int num) {
-		return null;
+		//TodoDto 객체를 담을 지역 변수 미리 만들기
+		TodoDto dto=null;
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = new DbcpBean().getConn();
+			//select 문 작성
+			String sql = "SELECT content, regdate"
+					+ " FROM todo"
+					+ " WHERE num=?";
+			pstmt = conn.prepareStatement(sql);
+			// ? 에 바인딩 할게 있으면 여기서 바인딩한다.
+			pstmt.setInt(1, num);
+			//select 문 수행하고 ResultSet 받아오기
+			rs = pstmt.executeQuery();
+			//while문 혹은 if문에서 ResultSet 으로 부터 data 추출
+			if (rs.next()) {
+				dto=new TodoDto();
+				dto.setNum(num);
+				dto.setContent(rs.getString("content"));
+				dto.setRegdate(rs.getString("regdate"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+			}
+		}
+		return dto;
 	}
 	public List<TodoDto> getList(){
 		//할일 목록을 담을 객체 생성
