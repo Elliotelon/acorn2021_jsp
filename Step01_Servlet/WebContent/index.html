@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>/index.html</title>
+</head>
+<body>
+<div class="container">
+	<h1>인덱스 페이지 입니다.</h1>
+	<ul>
+		<li><a href="hello">hello 요청</a></li>
+		<li><a href="ya">ya 요청</a></li>
+		<!-- 상대경로 -->
+		<li><a href="time">현재 시간 보기</a></li>
+		<!-- 절대경로 -->
+		<li><a href="/Step01_Servlet/time">현재 시간 보기2</a></li>
+		<li><a href="sub/fortune">오늘의 운세보기</a></li>
+		<li><a href="sub/fortune.jsp">오늘의 운세보기2</a></li>
+		<li><a href="send?msg=hello">GET 방식 전송 테스트1</a></li>
+		<li><a href="send.jsp?msg=hi">GET 방식 전송 테스트2</a></li>
+		<li><a href="test/buy.jsp?num=999&type=ABC">999번 상품 구입하기</a></li>
+	</ul>
+	<h2>GET 방식 폼 전송예제</h2>
+	<!-- 클라이언트 웹브라우저에서 서버에 데이터를 전송할때 사용하는 요소 -->
+	<form action="send" method="get">
+		<input type="text" name="msg" placeholder="문자열 입력..."/>
+		<button type="submit">전송</button>
+		<button type="reset">취소</button>
+	</form>
+	<br/>
+	<form action="send.jsp" method="get">
+		<input type="text" name="msg" placeholder="문자열 입력..."/>
+		<button type="submit">전송2</button>
+		<button type="reset">취소</button>
+	</form>
+	<h2>POST 방식 폼 전송 예제</h2>
+	<form action="test/send2" method="post">
+		<input type="text" name="msg" placeholder="문자열 입력..."/>
+		<button type="submit">전송3</button>
+	</form>
+	<form action="test/send2.jsp" method="post">
+		<input type="text" name="msg" placeholder="문자열 입력..."/>
+		<button type="submit">전송4</button>
+	</form>
+</div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
