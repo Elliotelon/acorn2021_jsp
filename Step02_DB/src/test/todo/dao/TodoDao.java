@@ -42,7 +42,36 @@ public class TodoDao {
 		}
 	}
 	public boolean update(TodoDto dto) {
-		return false;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		int flag = 0;
+		try {
+			conn = new DbcpBean().getConn();
+			//실행할 insert, update, delete 문 구성
+			String sql = "UPDATE todo"
+					+ " SET content=?"
+					+ " WHERE num=?";
+			pstmt = conn.prepareStatement(sql);
+			//? 에 바인딩할 내용이 있으면 바인딩한다.
+			pstmt.setString(1, dto.getContent());
+			pstmt.setInt(2, dto.getNum());
+			flag = pstmt.executeUpdate(); //sql 문 실행하고 변화된 row 갯수 리턴 받기
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+			}
+		}
+		if (flag > 0) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 	public boolean delete(int num) {
 		Connection conn = null;
