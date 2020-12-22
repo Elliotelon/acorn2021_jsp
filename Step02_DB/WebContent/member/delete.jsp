@@ -5,7 +5,7 @@
 	//1. 몇번 회원을 삭제 할지 알아내서(삭제할 회원의 번호를 읽어온다.)
 	int num=Integer.parseInt(request.getParameter("num"));
 	//2. DB 에서 실제로 삭제한다.
-	MemberDao dao=new MemberDao();
+	MemberDao dao=MemberDao.getInstance();
 	boolean isSuccess=dao.delete(num);
 	//3. 응답한다.
 %>

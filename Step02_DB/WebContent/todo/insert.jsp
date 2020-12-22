@@ -11,7 +11,7 @@
 	TodoDto dto=new TodoDto();
 	dto.setContent(content);
 	//Dao 를  이용해서 DB 에 저장한다.
-	boolean isSuccess=new TodoDao().insert(dto);
+	boolean isSuccess=TodoDao.getInstance().insert(dto);
 	//결과를 응답한다.
 %>    
 <!DOCTYPE html>

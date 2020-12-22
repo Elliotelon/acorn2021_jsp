@@ -13,7 +13,7 @@
 	dto.setNum(num);
 	dto.setContent(content);
 	// DB 에 수정 반영
-	boolean isSuccess=new TodoDao().update(dto);
+	boolean isSuccess=TodoDao.getInstance().update(dto);
 	// 응답
 %>    
 <!DOCTYPE html>

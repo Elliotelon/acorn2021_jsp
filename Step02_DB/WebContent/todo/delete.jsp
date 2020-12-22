@@ -5,7 +5,7 @@
 	// 삭제할 글번호를 읽어와서
 	int num=Integer.parseInt(request.getParameter("num"));
 	// 삭제하고
-	new TodoDao().delete(num);
+	TodoDao.getInstance().delete(num);
 	/* 
 		웹브라우저에게 특정 경로로 요청을 다시 하라고 응답한다 (리다일렉트 응답)
 		결과적으로 

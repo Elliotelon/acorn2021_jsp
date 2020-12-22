@@ -15,7 +15,7 @@
 	//4. MemberDao 에  insert 메소드 만들고 
 	
 	//5. MemberDao 객체를 이용해서 DB 에 저장 
-	MemberDao dao=new MemberDao();
+	MemberDao dao=MemberDao.getInstance();
 	boolean isSuccess=dao.insert(dto);
 	//6. 클라이언트(웹브라우저)에게 응답하기 
 %>    

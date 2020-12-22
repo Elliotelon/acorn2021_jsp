@@ -26,7 +26,7 @@
 		</thead>
 		<%
 			//할일 목록을 불러온다.
-			List<TodoDto> list=new TodoDao().getList();
+			List<TodoDto> list=TodoDao.getInstance().getList();
 		%>
 		<tbody>
 		<%for(TodoDto tmp:list){%>

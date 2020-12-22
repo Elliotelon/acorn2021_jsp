@@ -10,6 +10,18 @@ import test.member.dto.MemberDto;
 import test.util.DbcpBean;
 
 public class MemberDao {
+	//1. 
+	private static MemberDao dao;
+	//2.
+	private MemberDao() {}
+	//3.
+	public static MemberDao getInstance() {
+		if(dao==null) {
+			dao=new MemberDao();
+		}
+		return dao;
+	}
+	
 	
 	//회원 한명의 정보를 수정하는 메소드
 	public boolean update(MemberDto dto) {

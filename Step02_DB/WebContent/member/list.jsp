@@ -5,7 +5,7 @@
     pageEncoding="UTF-8"%>
 <%
 	//MemberDao 객체를 이용해서 회원 목록을 얻어온다.
-	List<MemberDto> list=new MemberDao().getList();
+	List<MemberDto> list=MemberDao.getInstance().getList();
 %>    
 <!DOCTYPE html>
 <html>
