@@ -8,14 +8,14 @@
 </head>
 <body>
 	<h1>회원 가입 폼 입니다.</h1>
-	<form action="signup.jsp" method="post">
+	<form action="signup.jsp" method="get">
 		닉네임 <input type="text" name="nick" /><br/>
 		이메일 수신 여부
 		<label>
-			<input type="radio" name="email" value="yes" checked="checked"/> 네
+			<input type="radio" name="email" value="yes" checked/> 네
 		</label>
 		<label>
-			<input type="radio" name="email" value="no"/> 아니요
+			<input type="radio" name="email" value="no" /> 아니요
 		</label>
 		<br/>
 		관심사 

@@ -1,3 +1,5 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
@@ -26,10 +28,16 @@
 	System.out.println("email:"+email);
 	System.out.println("concern:"+concern);
 	System.out.println("--- language ---");
+	
+	//체크박스의 value 를 저장할 ArrayList 객체 생성
+	List<String> languageList=new ArrayList<>();
+	
 	//만일 체크박스를 하나라도 체크 했다면 
 	if(language != null){ 
 		for(String tmp:language){
 			System.out.println(tmp);
+			//ArrayList 객체에 value 를 담는다. 
+			languageList.add(tmp);
 		}	
 	}
 	System.out.println("comment:"+comment);
@@ -45,34 +53,66 @@
 	<form action="signup.jsp" method="post">
 		닉네임 <input type="text" name="nick" value="<%=nick %>"/><br/>
 		이메일 수신 여부
+		<%if(email.equals("yes")){ %>
+			<label>
+				<input type="radio" name="email" value="yes" checked/> 네
+			</label>
+			<label>
+				<input type="radio" name="email" value="no"/> 아니요
+			</label>
+		<%}else{ %>
+			<label>
+				<input type="radio" name="email" value="yes" /> 네
+			</label>
+			<label>
+				<input type="radio" name="email" value="no" checked/> 아니요
+			</label>
+		<%} %>
+		<br/>
+		이메일 수신 여부    
 		<label>
-			<input type="radio" name="email" value="yes" checked="checked"/> 네
+			<input type="radio" name="email2" value="yes" 
+				<%if(email.equals("yes")){ %>checked<%} %>/> 네
 		</label>
 		<label>
-			<input type="radio" name="email" value="no"/> 아니요
+			<input type="radio" name="email2" value="no" 
+				<%if(email.equals("no")){ %>checked<%} %>/> 아니요
+		</label>
+		<br/>	
+		이메일 수신 여부   
+		<label>
+			<input type="radio" name="email3" value="yes" 
+				<%=email.equals("yes") ? "checked" : "" %>/> 네
+		</label>
+		<label>
+			<input type="radio" name="email3" value="no" 
+				<%=email.equals("no") ? "checked" : "" %>/> 아니요
 		</label>
 		<br/>
 		관심사 
 		<select name="concern">
 			<option value="">선택</option>
-			<option value="game">게임</option>
-			<option value="movie">영화</option>
-			<option value="etc">기타</option>
+			<option value="game" <%=concern.equals("game") ? "selected" : "" %>>게임</option>
+			<option value="movie" <%=concern.equals("movie") ? "selected" : "" %>>영화</option>
+			<option value="etc" <%=concern.equals("etc") ? "selected" : "" %>>기타</option>
 		</select>
 		<br/>
 		배우고 싶은 언어 체크
 		<label>
-			<input type="checkbox" name="language" value="Java"/> 자바
+			<input type="checkbox" name="language" value="Java" 
+				<%=languageList.contains("Java") ? "checked" : "" %>/> 자바
 		</label>
 		<label>
-			<input type="checkbox" name="language" value="Python"/> 파이선
+			<input type="checkbox" name="language" value="Python"
+				<%=languageList.contains("Python") ? "checked" : "" %>/> 파이선
 		</label>
 		<label>
-			<input type="checkbox" name="language" value="C++"/> C++
+			<input type="checkbox" name="language" value="C++" 
+				<%=languageList.contains("C++") ? "checked" : "" %>/> C++
 		</label>
 		<br/>
 		남기고 싶은 말
-		<textarea name="comment" cols="30" rows="10"></textarea>
+		<textarea name="comment" cols="30" rows="10"><%=comment %></textarea>
 		<br/>
 		<button type="submit">가입</button>
 	</form>	
