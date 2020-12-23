@@ -25,7 +25,7 @@
 		);
 	 -->
 	<h1>회원 가입 폼 입니다.</h1>
-	<form action="signup.jsp" method="get">
+	<form action="signup.jsp" method="post">
 		닉네임 <input type="text" name="nick" /><br/>
 		이메일 수신 여부
 		<label>

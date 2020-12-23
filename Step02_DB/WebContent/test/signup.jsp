@@ -63,6 +63,9 @@
 			}
 		}
 	}
+	//1. 원래는 전송된 정보를 dto 에 넣은다음
+	
+	//2. Dao 를 이용해서 DB 에 저장
 	
 	Connection conn = null;
 	PreparedStatement pstmt = null;
@@ -101,6 +104,7 @@
 <title>/test/signup.jsp</title>
 </head>
 <body>
+	<a href="info.jsp?nick=<%=nick%>">DB 에 저장된 내용 불러오기</a>
 	<h1>폼에 입력한 내용</h1>
 	<form action="signup.jsp" method="post">
 		닉네임 <input type="text" name="nick" value="<%=nick %>"/><br/>
