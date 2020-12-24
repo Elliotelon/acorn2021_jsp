@@ -15,6 +15,19 @@
 <link rel="stylesheet" href="../css/bootstrap.css" />
 </head>
 <body>
+<nav class="navbar navbar-dark bg-primary navbar-expand-sm">
+	<div class="container">
+	  	<a class="navbar-brand" href="${pageContext.request.contextPath }/">Acorn</a>
+		<ul class="navbar-nav">
+			<li class="nav-item">
+				<a class="nav-link" href="${pageContext.request.contextPath }/member/list.jsp">회원목록</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="${pageContext.request.contextPath }/todo/list.jsp">할일목록</a>
+			</li>
+		</ul>	
+	</div>
+</nav>
 <div class="container">
 	<a href="insertform.jsp">회원 추가 하러가기</a>
 	<h1>회원 목록입니다.</h1>
