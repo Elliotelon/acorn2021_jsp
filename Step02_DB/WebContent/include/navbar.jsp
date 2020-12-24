@@ -13,7 +13,7 @@
 	-navigation 요소를 포함하고 있다고 알려준다.
 	
 	배경색이 어두운색 계열이면 navbar-dark
-	배경색이 밝은색 계열이면 navbar-light 클래스를 추가해야한다.
+	배경색이 밝은색 계열이면 navbar-light 클래스를 추가 해야한다.
 -->
  <nav class="navbar navbar-dark bg-primary navbar-expand-sm">
 	<div class="container">
