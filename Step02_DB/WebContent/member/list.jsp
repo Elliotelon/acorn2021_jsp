@@ -18,8 +18,15 @@
 <%-- 포함시킬 jsp 페이지의 위치를 반드시 상대 경로로 page 의 value 로 명시 해야한다. --%>
 <jsp:include page="../include/navbar.jsp"></jsp:include>
 <div class="container">
+	<nav>
+		<ul class="breadcrumb">
+			<li class="breadcrumb-item">
+				<a href="${pageContext.request.contextPath }/">Home</a>
+			</li>
+			<li class="breadcrumb-item active">회원목록</li>
+		</ul>
+	</nav>
 	<a href="insertform.jsp">회원 추가 하러가기</a>
-	<h1>회원 목록입니다.</h1>
 	<table class="table">
 		<thead class="table-dark">	
 			<tr>
