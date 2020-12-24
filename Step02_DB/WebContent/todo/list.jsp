@@ -12,7 +12,9 @@
 </head>
 <body>
 <%-- 포함시킬 jsp 페이지의 위치를 반드시 상대 경로로 page 의 value 로 명시 해야한다. --%>
-<jsp:include page="../include/navbar.jsp"></jsp:include>
+<jsp:include page="../include/navbar.jsp">
+	<jsp:param value="todo" name="thisPage"/>
+</jsp:include>
 <div class="container">
 	<a href="${pageContext.request.contextPath }/todo/insertform.jsp">할일 추가하기</a>
 	<h1>할일 목록 입니다.</h1>

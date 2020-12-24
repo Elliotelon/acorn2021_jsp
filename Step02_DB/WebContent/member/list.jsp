@@ -16,7 +16,15 @@
 </head>
 <body>
 <%-- 포함시킬 jsp 페이지의 위치를 반드시 상대 경로로 page 의 value 로 명시 해야한다. --%>
-<jsp:include page="../include/navbar.jsp"></jsp:include>
+<%--
+		navbar.jsp 페이지에 요청 파라미터를 전달할 수 있다.
+		"thisPage" 라는 파라미터 명으로 "member" 라는 문자열 전달
+		따라서 navbar.jsp 페이지 에서는 아래와 같이 파라미터를 추출할 수 있다.
+		String thisPage=request.getParameter("thisPage")
+	 --%>
+<jsp:include page="../include/navbar.jsp">
+	<jsp:param value="member" name="thisPage"/>
+</jsp:include>
 <div class="container">
 	<nav>
 		<ul class="breadcrumb">

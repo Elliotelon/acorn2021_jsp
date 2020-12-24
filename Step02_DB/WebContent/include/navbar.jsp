@@ -15,18 +15,28 @@
 	배경색이 어두운색 계열이면 navbar-dark
 	배경색이 밝은색 계열이면 navbar-light 클래스를 추가 해야한다.
 -->
+<%
+	//"thisPage" 라는 파라미터 명으로 전달된 문자열 읽어오기
+	String thisPage=request.getParameter("thisPage");
+	//NullPointerException 방지
+	if(thisPage==null){
+		thisPage="";
+	}
+%>
  <nav class="navbar navbar-dark bg-primary navbar-expand-sm">
 	<div class="container">
-	  	<a class="navbar-brand" href="${pageContext.request.contextPath }/">Acorn</a>
+	  	<a class="navbar-brand" href="${pageContext.request.contextPath }/">
+	  		<img style="width:30px; height:30px" src="${pageContext.request.contextPath}/images/kim1.png"> Acorn
+	  	</a>
 		<button class="navbar-toggler" data-toggle="collapse" data-target="#topNav">
 			<span class="navbar-toggler-icon"></span>
 		</button>
 		<div class="collapse navbar-collapse" id="topNav">
 			<ul class="navbar-nav">
-				<li class="nav-item">
+				<li class="nav-item <%=thisPage.equals("member")?"active":"" %>">
 					<a class="nav-link" href="${pageContext.request.contextPath }/member/list.jsp">회원목록</a>
 				</li>
-				<li class="nav-item">
+				<li class="nav-item <%=thisPage.equals("todo")?"active":"" %>">
 					<a class="nav-link" href="${pageContext.request.contextPath }/todo/list.jsp">할일목록</a>
 				</li>
 			</ul>	
