@@ -11,13 +11,18 @@
  <nav class="navbar navbar-dark bg-primary navbar-expand-sm">
 	<div class="container">
 	  	<a class="navbar-brand" href="${pageContext.request.contextPath }/">Acorn</a>
-		<ul class="navbar-nav">
-			<li class="nav-item">
-				<a class="nav-link" href="${pageContext.request.contextPath }/member/list.jsp">회원목록</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" href="${pageContext.request.contextPath }/todo/list.jsp">할일목록</a>
-			</li>
-		</ul>	
+		<button class="navbar-toggler" data-toggle="collapse" data-target="#topNav">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="topNav">
+			<ul class="navbar-nav">
+				<li class="nav-item">
+					<a class="nav-link" href="${pageContext.request.contextPath }/member/list.jsp">회원목록</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="${pageContext.request.contextPath }/todo/list.jsp">할일목록</a>
+				</li>
+			</ul>	
+		</div>
 	</div>
 </nav>

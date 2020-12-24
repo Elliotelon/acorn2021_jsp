@@ -12,7 +12,9 @@
 <head>
 <meta charset="UTF-8">
 <title>/member/list.jsp</title>
-<link rel="stylesheet" href="../css/bootstrap.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath }/css/bootstrap.css" />
+<script src="${pageContext.request.contextPath }/js/jquery-3.5.1.js"></script>
+<script src="${pageContext.request.contextPath }/js/bootstrap.js"></script>
 </head>
 <body>
 <%-- 포함시킬 jsp 페이지의 위치를 반드시 상대 경로로 page 의 value 로 명시 해야한다. --%>
