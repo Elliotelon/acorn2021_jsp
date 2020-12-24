@@ -8,6 +8,13 @@
 <%--
 	특정 jsp 페이지에 포함 시킬 내용을 jsp 페이지에 작성할수 있습니다.
  --%>
+ <!-- 
+	nav 요소는 div 요소에 의미를 더한 요소이다. 
+	-navigation 요소를 포함하고 있다고 알려준다.
+	
+	배경색이 어두운색 계열이면 navbar-dark
+	배경색이 밝은색 계열이면 navbar-light 클래스를 추가해야한다.
+-->
  <nav class="navbar navbar-dark bg-primary navbar-expand-sm">
 	<div class="container">
 	  	<a class="navbar-brand" href="${pageContext.request.contextPath }/">Acorn</a>
