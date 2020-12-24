@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- bootstrap css 로딩하기 -->
+<link rel="stylesheet" href="css/bootstrap.css"/>
+
+
+
+</head>
+<body>
+	<div class="container">
+		<h1>나의 웹페이지</h1>
+		<!-- 상대 경로로 이미지 로딩하기 -->
+		<img src="images/kim1.png"/>
+		<!-- 절대 경로로 이미지 로딩하기 -->
+		<img src="/Hello/images/kim1.png"/>
+		<ul>
+			<!-- 상대 경로 링크 -->
+			<li><a href="game.html">게임 하러가기</a></li>
+			<!-- 
+				절대 경로 링크 
+				/Hello 는 context path(프로젝트명)이다.
+				/Hello/ 는 Hello 프로젝트의 WebContent를 가리킨다.
+			-->
+			<li><a href="/Hello/game.html">게임 하러가기2</a></li>
+			<li><a href="hobby/piano.html">피아노 치러가기</a></li>
+		</ul>
+	</div>
+	
+	
+</body>
+</html>
