@@ -15,19 +15,8 @@
 <link rel="stylesheet" href="../css/bootstrap.css" />
 </head>
 <body>
-<nav class="navbar navbar-dark bg-primary navbar-expand-sm">
-	<div class="container">
-	  	<a class="navbar-brand" href="${pageContext.request.contextPath }/">Acorn</a>
-		<ul class="navbar-nav">
-			<li class="nav-item">
-				<a class="nav-link" href="${pageContext.request.contextPath }/member/list.jsp">회원목록</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" href="${pageContext.request.contextPath }/todo/list.jsp">할일목록</a>
-			</li>
-		</ul>	
-	</div>
-</nav>
+<%-- 포함시킬 jsp 페이지의 위치를 반드시 상대 경로로 page 의 value 로 명시 해야한다. --%>
+<jsp:include page="../include/navbar.jsp"></jsp:include>
 <div class="container">
 	<a href="insertform.jsp">회원 추가 하러가기</a>
 	<h1>회원 목록입니다.</h1>
