@@ -14,6 +14,7 @@
 	<h1>인덱스 페이지 입니다.</h1>
 	<ul>
 		<li><a href="member/list.jsp">회원 목록보기</a></li>
+		<li><a href="member/mylist.jsp">회원 목록보기</a></li>
 		<!-- 
 			아래의 링크가 동작하도록 해 보세요.
 			목록보기, 추가, 수정, 삭제 기능을 모두 구현 하세요.

@@ -1,3 +1,4 @@
+<%@page import="java.util.ArrayList"%>
 <%@page import="test.member.dto.MemberDto"%>
 <%@page import="test.member.dao.MemberDao"%>
 <%@page import="java.util.List"%>
@@ -12,21 +13,46 @@
 	String strPageNum=request.getParameter("pageNum");
 	//만일 페이지 번호가 파라미터로 넘어 온다면
 	if(strPageNum != null){
-		//숫자로 바꿔서 보여줄 페이지 번호로 지정한다.
+		//숫자로 바꿔서 보여줄 페이지 번호로 지정한다
 		pageNum=Integer.parseInt(strPageNum);
 	}
+	
+	
 	//보여줄 페이지의 시작 ROWNUM
 	int startRowNum=1+(pageNum-1)*pageRowCount;
 	//보여줄 페이지의 끝 ROWNUM
 	int endRowNum=pageNum*pageRowCount;
-	
-	//startRowNum 과 endRowNum  을 MemberDto 객체에 담고
+	//startRowNum 과 endRowNum을 MemberDto 객체에 담고
 	MemberDto dto=new MemberDto();
 	dto.setStartRowNum(startRowNum);
 	dto.setEndRowNum(endRowNum);
 	
 	//MemberDao 객체를 이용해서 회원 목록을 얻어온다.
 	List<MemberDto> list=MemberDao.getInstance().getList(dto);
+	
+	//페이지 블록지정
+	int pageBlock=pageNum%pageRowCount==0? pageNum/pageRowCount:(pageNum/pageRowCount)+1;
+	//보여줄 페이지의 시작 ROWNUM을 정해진범위 안에서 일정하게 고정
+	startRowNum=1+(pageBlock-1)*pageRowCount;
+	//보여줄 페이지의 끝 ROWNUM 정해진범위 안에서 일정하게 고정
+	endRowNum=startRowNum+pageRowCount-1;
+	
+	//전체 ROW갯수 가져오기
+	int count=MemberDao.getInstance().getCount();
+	
+	//전체 페이지 수
+	int pageCount=0;
+	if(count%pageRowCount==0){
+		pageCount=count/pageRowCount;	
+	}else{
+		pageCount=(count/pageRowCount)+1;
+	}
+	
+	//페이지의endRowNum이 페이지수보다 클 경우 endRowNum을 페이지수로 바꿔주는 작업
+	if(endRowNum>=pageCount){
+		endRowNum=pageCount;
+	}
+	
 %>    
 <!DOCTYPE html>
 <html>
@@ -37,12 +63,12 @@
 </head>
 <body>
 <%-- 포함시킬 jsp 페이지의 위치를 반드시 상대 경로로 page 의 value 로 명시 해야한다. --%>
-<%-- 
-	navbar.jsp 페이지에 요청 파라미터를 전달할수 있다. 
-	"thisPage" 라는 파라미터 명으로 "member" 라는 문자열 전달 
-	따라서 navbar.jsp 페이지 에서는 아래와 같이 파라미터를 추출할수 있다. 
-	String thisPage=request.getParameter("thisPage")
---%>
+<%--
+		navbar.jsp 페이지에 요청 파라미터를 전달할 수 있다.
+		"thisPage" 라는 파라미터 명으로 "member" 라는 문자열 전달
+		따라서 navbar.jsp 페이지 에서는 아래와 같이 파라미터를 추출할 수 있다.
+		String thisPage=request.getParameter("thisPage")
+	 --%>
 <jsp:include page="../include/navbar.jsp">
 	<jsp:param value="member" name="thisPage"/>
 </jsp:include>
@@ -78,13 +104,36 @@
 			<%} %>
 		</tbody>
 	</table>
-	<p class="alert alert-warning">
-		현재 페이지는 <strong><%=pageNum %></strong> 입니다.
-		죄송하지만 현재 저희 개발자가 아직 안배운게 있어서 다른 페이지로 이동하고 싶으면
-		주소창에 <code>?pagNum=원하는페이지</code> 처럼 작성해서 이동하세요 
-	</p>
+	<nav aria-label="Page navigation example">
+	  <ul class="pagination">
+	  	<!-- 첫페이지에서는 이전링크 숨기는 코드 -->
+	    <li class="page-item">
+	      <a class="page-link" href="?pageNum=<%=startRowNum-1%>"
+	      <%=startRowNum==1?"hidden":"" %>>
+	        <span>&laquo;</span>
+	      </a>
+	    </li>
+	    
+	    <!-- startRowNum에서 endRowNum까지 화면에 보여주는 코드 -->
+	    <%
+	    	for(int i=startRowNum; i<=endRowNum; i++){
+	    	%>
+	    		<!-- 현재페이지 활성화시키는 코드 -->
+				<li class="page-item <%=i==pageNum?"active":""%>">
+					<a class="page-link" href="?pageNum=<%=i%>"><%=i%></a>
+				</li>	
+	   	  <%}
+	    
+	    %>
+	    <!-- 마지막페이지 다음링크 숨기는 코드 -->
+	    <li class="page-item">
+	      <a class="page-link" href="?pageNum=<%=endRowNum+1%>" 
+	      <%=endRowNum>=pageCount?"hidden":""%>>
+	        <span>&raquo;</span>
+	      </a>
+	    </li>
+	  </ul>
+	</nav>
 </div>
 </body>
 </html>
-
-

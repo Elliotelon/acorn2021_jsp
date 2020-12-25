@@ -10,7 +10,10 @@
 	String name=request.getParameter("name");
 	String addr=request.getParameter("addr");
 	//3. MemberDto 객체에 수정할 회원의 정보를 담는다.
-	MemberDto dto=new MemberDto(num, name, addr);
+	MemberDto dto=new MemberDto();
+	dto.setNum(num);
+	dto.setName(name);
+	dto.setAddr(addr);
 	//4. DB 에 수정 반영하기
 	boolean isSuccess=MemberDao.getInstance().update(dto);
 	//5. 응답하기 
