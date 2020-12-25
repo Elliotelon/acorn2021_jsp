@@ -25,8 +25,8 @@
 %>
  <nav class="navbar navbar-dark bg-primary navbar-expand-sm">
 	<div class="container">
-	  	<a class="navbar-brand" href="${pageContext.request.contextPath }/">
-	  		<img style="width:30px; height:30px" src="${pageContext.request.contextPath}/images/kim1.png"> Acorn
+		<a class="navbar-brand" href="${pageContext.request.contextPath }/">
+	  	Acorn
 	  	</a>
 		<button class="navbar-toggler" data-toggle="collapse" data-target="#topNav">
 			<span class="navbar-toggler-icon"></span>

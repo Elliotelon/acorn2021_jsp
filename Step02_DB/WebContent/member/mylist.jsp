@@ -17,11 +17,11 @@
 		pageNum=Integer.parseInt(strPageNum);
 	}
 	
-	
 	//보여줄 페이지의 시작 ROWNUM
 	int startRowNum=1+(pageNum-1)*pageRowCount;
 	//보여줄 페이지의 끝 ROWNUM
 	int endRowNum=pageNum*pageRowCount;
+	
 	//startRowNum 과 endRowNum을 MemberDto 객체에 담고
 	MemberDto dto=new MemberDto();
 	dto.setStartRowNum(startRowNum);
@@ -30,12 +30,14 @@
 	//MemberDao 객체를 이용해서 회원 목록을 얻어온다.
 	List<MemberDto> list=MemberDao.getInstance().getList(dto);
 	
+	//페이지리스트의 갯수지정
+	int pageListCount=5;
 	//페이지 블록지정
-	int pageBlock=pageNum%pageRowCount==0? pageNum/pageRowCount:(pageNum/pageRowCount)+1;
+	int pageBlock=pageNum%pageListCount==0? pageNum/pageListCount:(pageNum/pageListCount)+1;
 	//보여줄 페이지의 시작 ROWNUM을 정해진범위 안에서 일정하게 고정
-	startRowNum=1+(pageBlock-1)*pageRowCount;
+	startRowNum=1+(pageBlock-1)*pageListCount;
 	//보여줄 페이지의 끝 ROWNUM 정해진범위 안에서 일정하게 고정
-	endRowNum=startRowNum+pageRowCount-1;
+	endRowNum=startRowNum+pageListCount-1;
 	
 	//전체 ROW갯수 가져오기
 	int count=MemberDao.getInstance().getCount();
@@ -60,15 +62,11 @@
 <meta charset="UTF-8">
 <title>/member/list.jsp</title>
 <jsp:include page="../include/resource.jsp"></jsp:include>
+<style>
+
+</style>
 </head>
 <body>
-<%-- 포함시킬 jsp 페이지의 위치를 반드시 상대 경로로 page 의 value 로 명시 해야한다. --%>
-<%--
-		navbar.jsp 페이지에 요청 파라미터를 전달할 수 있다.
-		"thisPage" 라는 파라미터 명으로 "member" 라는 문자열 전달
-		따라서 navbar.jsp 페이지 에서는 아래와 같이 파라미터를 추출할 수 있다.
-		String thisPage=request.getParameter("thisPage")
-	 --%>
 <jsp:include page="../include/navbar.jsp">
 	<jsp:param value="member" name="thisPage"/>
 </jsp:include>
@@ -81,6 +79,7 @@
 			<li class="breadcrumb-item active">회원목록</li>
 		</ul>
 	</nav>
+	
 	<a href="insertform.jsp">회원 추가 하러가기</a>
 	<table class="table">
 		<thead class="table-dark">	
@@ -104,13 +103,14 @@
 			<%} %>
 		</tbody>
 	</table>
-	<nav aria-label="Page navigation example">
+	
+	<nav>
 	  <ul class="pagination">
 	  	<!-- 첫페이지에서는 이전링크 숨기는 코드 -->
 	    <li class="page-item">
 	      <a class="page-link" href="?pageNum=<%=startRowNum-1%>"
 	      <%=startRowNum==1?"hidden":"" %>>
-	        <span>&laquo;</span>
+	        <span style="color:black">&laquo;</span>
 	      </a>
 	    </li>
 	    
@@ -120,7 +120,8 @@
 	    	%>
 	    		<!-- 현재페이지 활성화시키는 코드 -->
 				<li class="page-item <%=i==pageNum?"active":""%>">
-					<a class="page-link" href="?pageNum=<%=i%>"><%=i%></a>
+					<a class="page-link" href="?pageNum=<%=i%>" 
+					style='color:black<%=i==pageNum?"; background-color:#EAEAEA; border-color:#EAEAEA":""%>' ><%=i%></a>
 				</li>	
 	   	  <%}
 	    
@@ -129,7 +130,7 @@
 	    <li class="page-item">
 	      <a class="page-link" href="?pageNum=<%=endRowNum+1%>" 
 	      <%=endRowNum>=pageCount?"hidden":""%>>
-	        <span>&raquo;</span>
+	        <span style='color:black'>&raquo;</span>
 	      </a>
 	    </li>
 	  </ul>
