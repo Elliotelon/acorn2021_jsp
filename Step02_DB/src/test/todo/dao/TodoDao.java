@@ -31,6 +31,42 @@ public class TodoDao {
 		//static 필드에 저장된 참조값을 리턴해준다.
 		return dao;
 	}
+	//전체 row의 갯수를 리턴하는 메소드
+	public int getCount() {
+		int count=0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = new DbcpBean().getConn();
+			//select문 작성
+			String sql = "SELECT NVL(MAX(ROWNUM),0) AS num FROM todo";
+			pstmt = conn.prepareStatement(sql);
+			// ? 에 바인딩 할게 있으면 여기서 바인딩한다.
+
+			//select 문 수행하고 ResultSet 받아오기
+			rs = pstmt.executeQuery();
+			//while문 혹은 if문에서  ResultSet으로 부터 data 추출
+			if(rs.next()) {
+				count=rs.getInt("num");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return count;
+	}
 	
 	
 	public boolean insert(TodoDto dto) {
@@ -165,8 +201,10 @@ public class TodoDao {
 		}
 		return dto;
 	}
-	public List<TodoDto> getList(){
-		//할일 목록을 담을 객체 생성
+	
+	//회원 목록을 리턴해주는 메소드
+	public List<TodoDto> getList(TodoDto dto){
+		//리턴해줄 ArrayList 객체 생성
 		List<TodoDto> list=new ArrayList<TodoDto>();
 		
 		Connection conn = null;
@@ -175,24 +213,25 @@ public class TodoDao {
 		try {
 			conn = new DbcpBean().getConn();
 			//select 문 작성
-			String sql = "SELECT num, content, regdate"
-					+ " FROM todo"
-					+ " ORDER BY num ASC";
+			String sql = "SELECT*FROM (SELECT result1.*, ROWNUM AS rnum FROM"
+					+" (SELECT num,content,regdate FROM todo ORDER BY num DESC) result1)"
+					+" WHERE rnum BETWEEN ? AND ?";
+					
 			pstmt = conn.prepareStatement(sql);
 			// ? 에 바인딩 할게 있으면 여기서 바인딩한다.
-
+			pstmt.setInt(1, dto.getStartRowNum());
+			pstmt.setInt(2, dto.getEndRowNum());
 			//select 문 수행하고 ResultSet 받아오기
 			rs = pstmt.executeQuery();
 			//while문 혹은 if문에서 ResultSet 으로 부터 data 추출
 			while (rs.next()) {
-				//TodoDto 객체를 생성해서 
-				TodoDto dto=new TodoDto();
-				//select 된 ResultSet 에 담긴 내용을 담고 
-				dto.setNum(rs.getInt("num"));
-				dto.setContent(rs.getString("content"));
-				dto.setRegdate(rs.getString("regdate"));
+				//TodoDto 객체를 생성해서 회원 한명의 정보를 담아서 
+				TodoDto tmp=new TodoDto();
+				tmp.setNum(rs.getInt("num"));
+				tmp.setContent(rs.getString("content"));
+				tmp.setRegdate(rs.getString("regdate"));
 				//ArrayList 객체에 누적 시킨다. 
-				list.add(dto);
+				list.add(tmp);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -207,6 +246,7 @@ public class TodoDao {
 			} catch (Exception e) {
 			}
 		}
+		
 		return list;
 	}
 }

@@ -4,15 +4,20 @@ public class TodoDto {
 	private int num;
 	private String content;
 	private String regdate;
+	//페이징 처리에 필요한 필드
+	private int startRowNum;
+	private int endRowNum;
 	
 	//디폴트 생성자
 	public TodoDto() {}
 
-	public TodoDto(int num, String content, String regdate) {
+	public TodoDto(int num, String content, String regdate, int startRowNum, int endRowNum) {
 		super();
 		this.num = num;
 		this.content = content;
 		this.regdate = regdate;
+		this.startRowNum = startRowNum;
+		this.endRowNum = endRowNum;
 	}
 
 	public int getNum() {
@@ -38,5 +43,23 @@ public class TodoDto {
 	public void setRegdate(String regdate) {
 		this.regdate = regdate;
 	}
+
+	public int getStartRowNum() {
+		return startRowNum;
+	}
+
+	public void setStartRowNum(int startRowNum) {
+		this.startRowNum = startRowNum;
+	}
+
+	public int getEndRowNum() {
+		return endRowNum;
+	}
+
+	public void setEndRowNum(int endRowNum) {
+		this.endRowNum = endRowNum;
+	}
+
+	
 	
 }
