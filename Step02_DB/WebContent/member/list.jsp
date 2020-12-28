@@ -27,20 +27,21 @@
 	
 	//MemberDao 객체를 이용해서 회원 목록을 얻어온다.
 	List<MemberDto> list=MemberDao.getInstance().getList(dto);
+	//하단 페이지 이동 UI를 최대 몇개씩 표시할지에 대한 값
+	int PageDisplayCount=5;
 	
-	//int PageDisplayCount=5;
-	
-	int startPageNum=1+((pageNum-1)/5)*5;
-	int endPageNum=startPageNum+5-1;
+	int startPageNum=1+((pageNum-1)/PageDisplayCount)*PageDisplayCount;
+	int endPageNum=startPageNum+PageDisplayCount-1;
 	
 	//전체 row의 갯수
 	int totalRow=MemberDao.getInstance().getCount();
 	
 	//전체 페이지의 갯수 구하기
-	int totalPageCount=(int)Math.ceil(totalRow/(double)5);
+	int totalPageCount=(int)Math.ceil(totalRow/(double)pageRowCount);
 	
-	if(endPageNum>=totalPageCount){
-		endPageNum=totalPageCount;
+	//끝 페이지 번호가 이미 전체 페이지 갯수보다 크게 계산되었다면 잘못된 값이다.
+	if(endPageNum>totalPageCount){
+		endPageNum=totalPageCount; //보정해준다.
 	}
 	
 %>    
@@ -94,16 +95,13 @@
 			<%} %>
 		</tbody>
 	</table>
-	<p class="alert alert-warning">
-		현재 페이지는 <strong><%=pageNum %></strong> 입니다.
-		죄송하지만 현재 저희 개발자가 아직 안배운게 있어서 다른 페이지로 이동하고 싶으면
-		주소창에 <code>?pagNum=원하는페이지</code> 처럼 작성해서 이동하세요 
-	</p>
-	<nav aria-label="Page navigation example">
+	<nav>
 	  <ul class="pagination">
-	  	<li class="page-item">
-	  		<a class="page-link"href="list.jsp?pageNum=<%=startPageNum-1%>">Prev</a>
-	  	</li>
+	  	<%if(startPageNum!=1){ %>
+		  	<li class="page-item">
+		  		<a class="page-link"href="list.jsp?pageNum=<%=startPageNum-1%>">Prev</a>
+		  	</li>	  	
+	  	<%} %>
 	  	<%for(int i=startPageNum; i<=endPageNum; i++) {%>
     		<%if(i==pageNum){ %>
     			<li class="page-item active">
@@ -115,9 +113,11 @@
 		    	</li>
 		    <%} %>
 	    <%} %>
-	    <li class="page-item">
-	    	<a class="page-link" href="list.jsp?pageNum=<%=endPageNum+1%>">Next</a>
-	    </li>
+	    <%if(endPageNum<totalPageCount){ %>
+		    <li class="page-item">
+		    	<a class="page-link" href="list.jsp?pageNum=<%=endPageNum+1%>">Next</a>
+		    </li>	    
+	    <%} %>
 	  </ul>
 	</nav>
 </div>
