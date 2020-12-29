@@ -10,11 +10,6 @@
 	<%
 		//로그인 아이디 읽어오기
 		String id=(String)session.getAttribute("id");	
-		if(id==null){//로그인을 하지 않았으면
-			//로그인 폼으로 강제 라디일렉트 시킨다.
-			String cPath=request.getContextPath();
-			response.sendRedirect(cPath+"/test/loginform.jsp");	
-		}	
 	%>
 	<p><strong><%=id %></strong>님 신나게 놀아보아요!</p>
 	<a href="../index.jsp">인덱스로 가기</a>
