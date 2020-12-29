@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.websocket.Session;
 
 @WebServlet("/fortune")
 public class FortuneServlet extends HttpServlet {
@@ -25,13 +26,14 @@ public class FortuneServlet extends HttpServlet {
 		
 		//3. jsp 페이지로 forward 이동해서 응답한다.
 		// forward 이동은 응답을 위임하는 이동 방법이다.
-		// "/test/fortune.jsp" 는 WebContest/tets/fortune.jsp 페이지를 가리킨다.
+		// "/test/fortune.jsp" 는 WebContest/test/fortune.jsp 페이지를 가리킨다.
 		// forward 이동할때는 context path를 사용하지 않는다.
 		RequestDispatcher rd=req.getRequestDispatcher("/test/fortune.jsp");
 		// RequestDispatcher 객체의 forward() 메소드를 호출하면서
 		// HttpServletRequest 객체와 HttpServletResponse 객체의 참조값을 전달하면
 		// forward 이동이 된다.
 		rd.forward(req,resp);
+		
 		
 				
 		

@@ -18,8 +18,12 @@
 	<form action="test/save.jsp" method="post">
 		<input type="text" name="nick" placeholder="닉네임 입력..." />
 		<button type="submit">닉네임 기억 시키기</button>
-	
-	
+	</form>
+	</br>
+	<h3>폼을 Servlet에 전송</h3>
+	<form action="test/save" method="post">
+		<input type="text" name="nick" placeholder="닉네임 입력..." />
+		<button type="submit">닉네임 기억 시키기</button>
 	</form>
 </body>
 </html>

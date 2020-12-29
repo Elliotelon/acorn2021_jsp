@@ -13,6 +13,7 @@
 	//이번에는 응답하고 나서 페이지 이동을 해도 읽어낼 수 있도록 HttpSession 객체에 저장을 한다.
 	// "nick"이라는 키값으로 String type 저장하기
 	session.setAttribute("nick", nick);
+	
 	//60초 동안 어떤 요청도 하지 않으면 자동으로 삭제 되도록 설정(설정하지 않으면 30분)
 	session.setMaxInactiveInterval(60);
 	/*
