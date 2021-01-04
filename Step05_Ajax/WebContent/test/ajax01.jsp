@@ -55,6 +55,7 @@
 			})
 			.then(function(data){
 				//data는 {num:x , name:"xxx" } 형식의 object 이다.
+				//let data=JSON.parse(data) data가 object가 아닐경우 바꿔주어야함.
 				console.log(data);
 				//p요소를 동적으로 만들어서
 				let p1=document.createElement("p");
