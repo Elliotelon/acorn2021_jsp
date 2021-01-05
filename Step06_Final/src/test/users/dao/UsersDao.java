@@ -19,8 +19,7 @@ public class UsersDao {
 		}
 		return dao;
 	}
-	//회원탈퇴 하는 메소드
-	
+	//인자로 전달된 아이디에 해당하는 가입정보를 삭제하는 메소드
 	public boolean delete(String id) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
