@@ -9,13 +9,12 @@
 	UsersDto dto=UsersDao.getInstance().getData(id);
 	//3.가입정보를 응답한다.
 	
-
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>users/info.jsp</title>
+<title>users/private/info.jsp</title>
 </head>
 <body>
 <div class="container">
@@ -26,6 +25,10 @@
 			<td><%=dto.getId()%></td>
 		</tr>
 		<tr>
+			<th>비밀번호</th>
+			<td><a href="pwd_updateform.jsp">수정하기</a></td>
+		</tr>
+		<tr>
 			<th>이메일</th>
 			<td><%=dto.getEmail()%></td>
 		</tr>
@@ -34,6 +37,7 @@
 			<td><%=dto.getRegdate()%></td>
 		</tr>
 	</table>
+	<a href="updateform.jsp">개인정보수정</a>
 	<a href="javascript:deleteConfirm()">탈퇴</a>
 </div>
 <script>

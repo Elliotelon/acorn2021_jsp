@@ -6,14 +6,16 @@ public class UsersDto {
 	private String email;
 	private String profile;
 	private String regdate;
+	private String newPwd; //새 비밀번호를 담을 필드
 	
 	//디폴트 생성자
 	public UsersDto() {}
 
-	public UsersDto(String id, String pwd, String email, String profile, String regdate) {
+	public UsersDto(String id, String pwd, String newPwd, String email, String profile, String regdate) {
 		super();
 		this.id = id;
 		this.pwd = pwd;
+		this.newPwd = newPwd;
 		this.email = email;
 		this.profile = profile;
 		this.regdate = regdate;
@@ -33,6 +35,14 @@ public class UsersDto {
 
 	public void setPwd(String pwd) {
 		this.pwd = pwd;
+	}
+
+	public String getNewPwd() {
+		return newPwd;
+	}
+
+	public void setNewPwd(String newPwd) {
+		this.newPwd = newPwd;
 	}
 
 	public String getEmail() {
@@ -58,6 +68,6 @@ public class UsersDto {
 	public void setRegdate(String regdate) {
 		this.regdate = regdate;
 	}
-	
+
 	
 }
