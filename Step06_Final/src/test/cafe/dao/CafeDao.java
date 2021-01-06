@@ -18,6 +18,40 @@ public class CafeDao {
 		}
 		return dao;
 	}
+	//글 조회수를 올리는 메소드
+	public boolean addViewCount(int num) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		int flag = 0;
+		try {
+			conn = new DbcpBean().getConn();
+			//실행할 insert,update,delete문 구성
+			String sql = "UPDATE board_cafe"
+					+ " SET viewCount=viewCount+1"
+					+ " WHERE num=?";
+			pstmt = conn.prepareStatement(sql);
+			//?에 바인딩할 내용이 있으면 바인딩한다.
+			pstmt.setInt(1, num);
+			//sql문 실행하고 변화된 row갯수 리턴받기
+			flag = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+			}
+		}
+		if (flag > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 	//인자로 전달되는 글내용을 수정반영하는 메소드
 	public boolean update(CafeDto dto) {
 		Connection conn = null;

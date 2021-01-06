@@ -9,8 +9,10 @@
 <head>
 <meta charset="UTF-8">
 <title>/index.jsp</title>
+<jsp:include page="include/resource.jsp"></jsp:include>
 </head>
 <body>
+<jsp:include page="include/navbar.jsp"></jsp:include>
 <div class="container">
 	<%-- 만일 id 가 null 이 아니면 로그인을 한 상태이다. --%>
 	<%if(id != null){ %>

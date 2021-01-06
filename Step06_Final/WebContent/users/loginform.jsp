@@ -5,8 +5,10 @@
 <head>
 <meta charset="UTF-8">
 <title>users/loginform.jsp</title>
+<jsp:include page="../include/resource.jsp"></jsp:include>
 </head>
 <body>
+<jsp:include page="../include/navbar.jsp"></jsp:include>
 <div class="container">
 	<h1>로그인 폼입니다.</h1>
 	<form action="login.jsp" method="post">

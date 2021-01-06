@@ -12,13 +12,15 @@
 <head>
 <meta charset="UTF-8">
 <title>/cafe/list.jsp</title>
+<jsp:include page="../include/resource.jsp"></jsp:include>
 </head>
 <body>
+<jsp:include page="../include/navbar.jsp"></jsp:include>
 <div class="container">
 	<a href="private/insertform.jsp">새글 작성</a>
 	<h1>카페 글 목록 입니다.</h1>
-	<table>
-		<thead>
+	<table class="table">
+		<thead class="table-dark">
 			<tr>
 				<th>글번호</th>
 				<th>작성자</th>
