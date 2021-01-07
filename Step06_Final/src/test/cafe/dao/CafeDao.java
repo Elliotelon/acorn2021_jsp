@@ -18,6 +18,42 @@ public class CafeDao {
 		}
 		return dao;
 	}
+	//전체 글의 갯수를 리턴하는 메소드
+	public int getCount() {
+		int count=0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = new DbcpBean().getConn();
+			//select문 작성
+			String sql = "SELECT NVL(MAX(ROWNUM),0) AS num FROM board_cafe";
+			pstmt = conn.prepareStatement(sql);
+			// ? 에 바인딩 할게 있으면 여기서 바인딩한다.
+
+			//select 문 수행하고 ResultSet 받아오기
+			rs = pstmt.executeQuery();
+			//while문 혹은 if문에서  ResultSet으로 부터 data 추출
+			if(rs.next()) {
+				count=rs.getInt("num");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return count;
+	}
 	//글 조회수를 올리는 메소드
 	public boolean addViewCount(int num) {
 		Connection conn = null;
@@ -158,15 +194,12 @@ public class CafeDao {
 					pstmt.close();
 				if (conn != null)
 					conn.close();
-
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-
 		}
 		return dto;
 	}
-	
 	
 	//글 하나의 정보를 추가하는 메소드 
 	public boolean insert(CafeDto dto) {
@@ -202,9 +235,10 @@ public class CafeDao {
 			return false;
 		}
 	}
-	//글 전체 목록을 리턴하는 메소드 
-	public List<CafeDto> getList(){
-		//글목록을 담을 ArrayList 객체 생성
+	
+	//글 전체목록을 리턴해주는 메소드
+	public List<CafeDto> getList(CafeDto dto){
+		//리턴해줄 ArrayList 객체 생성
 		List<CafeDto> list=new ArrayList<CafeDto>();
 		
 		Connection conn = null;
@@ -213,23 +247,25 @@ public class CafeDao {
 		try {
 			conn = new DbcpBean().getConn();
 			//select 문 작성
-			String sql = "SELECT num,writer,title,viewCount,regdate"
-					+ " FROM board_cafe"
-					+ " ORDER BY num DESC";
+			String sql = "SELECT*FROM (SELECT result1.*, ROWNUM AS rnum FROM"
+					+" (SELECT num,writer,title,viewCount,regdate FROM board_cafe ORDER BY num DESC) result1)"
+					+" WHERE rnum BETWEEN ? AND ?";
+					
 			pstmt = conn.prepareStatement(sql);
 			// ? 에 바인딩 할게 있으면 여기서 바인딩한다.
-			
+			pstmt.setInt(1, dto.getStartRowNum());
+			pstmt.setInt(2, dto.getEndRowNum());
 			//select 문 수행하고 ResultSet 받아오기
 			rs = pstmt.executeQuery();
 			//while문 혹은 if문에서 ResultSet 으로 부터 data 추출
 			while (rs.next()) {
-				CafeDto dto=new CafeDto();
-				dto.setNum(rs.getInt("num"));
-				dto.setWriter(rs.getString("writer"));
-				dto.setTitle(rs.getString("title"));
-				dto.setViewCount(rs.getInt("viewCount"));
-				dto.setRegdate(rs.getString("regdate"));
-				list.add(dto);
+				CafeDto tmp=new CafeDto();
+				tmp.setNum(rs.getInt("num"));
+				tmp.setWriter(rs.getString("writer"));
+				tmp.setTitle(rs.getString("title"));
+				tmp.setViewCount(rs.getInt("viewCount"));
+				tmp.setRegdate(rs.getString("regdate"));
+				list.add(tmp);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

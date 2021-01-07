@@ -35,25 +35,25 @@
 			<span class="navbar-toggler-icon"></span>
 		</button>
 		<div class="collapse navbar-collapse" id="topNav">
-			<ul class="navbar-nav">
+			<ul class="navbar-nav mr-auto">
 				<li class="nav-item <%=thisPage.equals("cafe")?"active":"" %>">
 					<a class="nav-link" href="${pageContext.request.contextPath }/cafe/list.jsp">글목록</a>
 				</li>
 			</ul>	
-		</div>
-		<%
+			<%
 			//로그인된 아이디가 있는지 읽어와 본다.
 			String id=(String)session.getAttribute("id");
-		%>
-		<%if(id==null){ %>
-			<a class="btn btn-success btn-sm"
-			 href="${pageContext.request.contextPath}/users/loginform.jsp">로그인</a>		
-		<%}else{ %>
-			<span class="navbar-text">
-				<a href="${pageContext.request.contextPath}/users/private/info.jsp"><%=id %></a>
-				<a class="btn btn-warning btn-sm"
-				href="${pageContext.request.contextPath}/users/logout.jsp">로그아웃</a>
-			</span>
-		<%} %>
+			%>
+			<%if(id==null){ %>
+				<a class="btn btn-success btn-sm"
+				 href="${pageContext.request.contextPath}/users/loginform.jsp">로그인</a>		
+			<%}else{ %>
+				<span class="navbar-text">
+					<a href="${pageContext.request.contextPath}/users/private/info.jsp"><%=id %></a>
+					<a class="btn btn-warning btn-sm"
+					href="${pageContext.request.contextPath}/users/logout.jsp">로그아웃</a>
+				</span>
+			<%} %>
+		</div>
 	</div>
 </nav>
