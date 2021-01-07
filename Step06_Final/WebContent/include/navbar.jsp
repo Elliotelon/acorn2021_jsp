@@ -23,7 +23,7 @@
 		thisPage="";
 	}
 %>
- <nav class="navbar navbar-dark bg-dark navbar-expand-sm">
+ <nav class="navbar navbar-dark bg-dark navbar-expand-sm fixed-top">
 	<div class="container">
 		<a class="navbar-brand" href="${pageContext.request.contextPath }/">
 	  		<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-house" viewBox="0 0 20 20">
@@ -37,12 +37,23 @@
 		<div class="collapse navbar-collapse" id="topNav">
 			<ul class="navbar-nav">
 				<li class="nav-item <%=thisPage.equals("cafe")?"active":"" %>">
-					<a class="nav-link" href="${pageContext.request.contextPath }/cafe/detail.jsp">카페글목록</a>
-				</li>
-				<li class="nav-item <%=thisPage.equals("users")?"active":"" %>">
-					<a class="nav-link" href="${pageContext.request.contextPath }/users/list.jsp">할일목록</a>
+					<a class="nav-link" href="${pageContext.request.contextPath }/cafe/list.jsp">글목록</a>
 				</li>
 			</ul>	
 		</div>
+		<%
+			//로그인된 아이디가 있는지 읽어와 본다.
+			String id=(String)session.getAttribute("id");
+		%>
+		<%if(id==null){ %>
+			<a class="btn btn-success btn-sm"
+			 href="${pageContext.request.contextPath}/users/loginform.jsp">로그인</a>		
+		<%}else{ %>
+			<span class="navbar-text">
+				<a href="${pageContext.request.contextPath}/users/private/info.jsp"><%=id %></a>
+				<a class="btn btn-warning btn-sm"
+				href="${pageContext.request.contextPath}/users/logout.jsp">로그아웃</a>
+			</span>
+		<%} %>
 	</div>
 </nav>
