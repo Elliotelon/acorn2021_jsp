@@ -40,7 +40,7 @@
 					<a class="nav-link" href="${pageContext.request.contextPath }/cafe/list.jsp">글목록</a>
 				</li>
 				<li class="nav-item <%=thisPage.equals("file")?"active":"" %>">
-					<a class="nav-link" href="${pageContext.request.contextPath }/file/list.jsp">자료실목록</a>
+					<a class="nav-link" href="${pageContext.request.contextPath }/file/list.jsp">자료실</a>
 				</li>
 			</ul>	
 			<%

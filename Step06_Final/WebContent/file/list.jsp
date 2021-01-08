@@ -26,7 +26,6 @@
 	int startRowNum=1+(pageNum-1)*PAGE_ROW_COUNT;
 	//보여줄 페이지의 끝 ROWNUM
 	int endRowNum=pageNum*PAGE_ROW_COUNT;
-	
 	//startRowNum 과 endRowNum  을 CafeDto 객체에 담고
 	FileDto dto=new FileDto();
 	dto.setStartRowNum(startRowNum);
@@ -58,7 +57,9 @@
 <jsp:include page="../include/resource.jsp"></jsp:include>
 </head>
 <body>
-<jsp:include page="../include/navbar.jsp"></jsp:include>
+<jsp:include page="../include/navbar.jsp">
+	<jsp:param value="file" name="thisPage"/>
+</jsp:include>
 <div class="container">
 	<nav>
 		<ul class="breadcrumb">
