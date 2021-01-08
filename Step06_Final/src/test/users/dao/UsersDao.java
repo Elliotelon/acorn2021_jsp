@@ -19,6 +19,47 @@ public class UsersDao {
 		}
 		return dao;
 	}
+	//인자로 전달된 아이디가 DB에 존재하는지 여부를 리턴하는 메소드
+	public boolean isExist(String id) {
+		//아이디가 이미 존재하는지 여부를 담을 지역변수 선언하고 초기값 지정
+		boolean isExist=false;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = new DbcpBean().getConn();
+			//select문 작성
+			String sql = "SELECT*FROM users WHERE id=?";
+			pstmt = conn.prepareStatement(sql);
+			// ? 에 바인딩 할게 있으면 여기서 바인딩한다.
+			pstmt.setString(1, id);
+			//select 문 수행하고 ResultSet 받아오기
+			rs = pstmt.executeQuery();
+			//while문 혹은 if문에서  ResultSet으로 부터 data 추출
+			if(rs.next()) {
+				isExist=true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		//아이디가 이미 존재하는지 여부를 리턴해준다.
+		return isExist;
+	}
+	
+	
+	
 	//회원의 비밀번호를 수정하는 메소드
 	public boolean updatePwd(UsersDto dto) {
 		Connection conn = null;
