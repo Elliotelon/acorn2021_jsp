@@ -14,6 +14,9 @@
 		1. method="post"
 		2. enctype="multipart/form-data"
 		3. <input type="file"/>
+		-enctype="multipart/form-data"가 설정된 폼을 전송하면
+		폼 전송된 내용을 추출할때 HttpServletRequest 객체로 추출을 할 수 없다.
+		MultipartRequest 객체를 이용해서 추출해야 한다.
 	 -->
 	<form action="upload.jsp" method="post" enctype="multipart/form-data">
 		<div>

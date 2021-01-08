@@ -24,7 +24,7 @@
 				업로드된 파일을 저장할 절대경로,
 				최대 업로드 사이즈 제한,
 				인코딩설정,
-				DefaultFilenamePolicy 객체)
+				DefaultFileRenamePolicy 객체)
 		
 		MultipartRequest 객체가 성공적으로 생성이 된다면 업로드된 파일에 대한 정보도
 		추출할 수 있다.

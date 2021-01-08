@@ -4,6 +4,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
+	//로그인된 아이디가 있는지 읽어와 본다.
+	String id=(String)session.getAttribute("id");
+%>
+<%
 	//한 페이지에 몇개씩 표시할 것인지
 	final int PAGE_ROW_COUNT=5;
 	//하단 페이지를 몇개씩 표시할 것인지
@@ -75,6 +79,7 @@
 				<th>파일명</th>
 				<th>크기</th>
 				<th>등록일</th>
+				<th>삭제</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -86,6 +91,11 @@
 				<td><a href="download.jsp?num=<%=tmp.getNum()%>"><%=tmp.getOrgFileName() %></a></td>
 				<td><%=tmp.getFileSize() %></td>
 				<td><%=tmp.getRegdate() %></td>
+				<td>
+				<%if(tmp.getWriter().equals(id)){ %>
+					<a href="javascript:deleteConfirm(<%=tmp.getNum()%>)">삭제</a>
+				<%} %>
+				</td>
 			</tr>
 		<%} %>
 		</tbody>
@@ -124,5 +134,13 @@
 	  </ul>
 	</nav>
 </div>
+<script>
+	function deleteConfirm(num){
+		let isDelete=confirm(num+"번 파일을 삭제 하시겠습니까?");
+		if(isDelete){
+			location.href="private/delete.jsp?num="+num;
+		}	
+	}
+</script>
 </body>
 </html>
