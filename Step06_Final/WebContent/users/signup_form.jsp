@@ -15,7 +15,7 @@
 		<div class="form-group">
 			<label for="id">아이디</label>
 			<input class="form-control" type="text" name="id" id="id"/>
-			<div class="invalid-feedback">사용할수 없는 아이디 입니다.</div>
+			<div class="invalid-feedback">사용 할 수 없는 아이디 입니다.</div>
 		</div>
 		<div class="form-group">
 			<label for="pwd">비밀번호</label>
