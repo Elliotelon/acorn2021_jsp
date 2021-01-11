@@ -58,7 +58,7 @@
 		</tr>
 		<tr>
 			<td colspan="2">
-				<textarea class="form-control" disabled><%=dto.getContent() %></textarea>
+				<div><%=dto.getContent() %></div>
 			</td>
 		</tr>
 	</table>

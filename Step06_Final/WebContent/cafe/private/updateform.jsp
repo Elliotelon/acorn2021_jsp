@@ -16,27 +16,35 @@
 <head>
 <meta charset="UTF-8">
 <title>/cafe/private/updateform.jsp</title>
+<jsp:include page="../../include/resource.jsp"></jsp:include>
 </head>
 <body>
+<jsp:include page="../../include/navbar.jsp">
+	<jsp:param value="cafe" name="thisPage"/>
+</jsp:include>
+
 <div class="container">
 	<h1>글 수정 폼 입니다.</h1>
 	<form action="update.jsp" method="post">
 		<input type="hidden" name="num" value="<%=dto.getNum() %>" />
-		<div>
+		<div class="form-group">
 			<label>작성자</label>
-			<input type="text" value="<%=dto.getWriter() %>" disabled />
+			<input class="form-control"type="text" value="<%=dto.getWriter() %>" disabled />
 		</div>
-		<div>
+		<div class="form-group">
 			<label for="title">제목</label>
-			<input type="text" name="title" id="title" value="<%=dto.getTitle() %>" />
+			<input class="form-control" type="text" name="title" id="title" value="<%=dto.getTitle() %>" />
 		</div>
-		<div>
+		<div class="form-group">
 			<label for="content">내용</label>
-			<textarea name="content" id="content"><%=dto.getContent() %></textarea>
+			<!-- textarea의 아이디는 반드시 content가 되어야 smarteditor 적용가능 -->
+			<textarea class="form-control" name="content" id="content"><%=dto.getContent() %></textarea>
 		</div>
-		<button type="submit">수정확인</button>
+		<!-- 클릭했을때 smarteditor의 submitContents(this)함수 실행되도록 설정 -->
+		<button type="submit" onclick="submitContents(this);">수정확인</button>
 		<button type="reset">취소</button>
 	</form>
 </div>
+<jsp:include page="../../include/smarteditor.jsp"></jsp:include>
 </body>
 </html>

@@ -1,3 +1,4 @@
+<%@page import="java.net.URLEncoder"%>
 <%@page import="test.file.dao.FileDao"%>
 <%@page import="test.file.dto.FileDto"%>
 <%@page import="java.util.List"%>
@@ -32,6 +33,15 @@
 	dto.setEndRowNum(endRowNum);
 	
 	//글목록 불러오기
+	String keyword=request.getParameter("keyword");
+	String condition=request.getParameter("condition");
+	if(keyword==null){
+		keyword="";
+		condition="";
+	}
+	String encodedK=URLEncoder.encode(keyword);
+	
+	
 	List<FileDto> list=FileDao.getInstance().getList(dto);
 	
 	int startPageNum=1+((pageNum-1)/PAGE_DISPLAY_COUNT)*PAGE_DISPLAY_COUNT;
@@ -134,6 +144,16 @@
 	    <%} %>
 	  </ul>
 	</nav>
+	<form action="list.jsp" method="get">
+		<label for="condition">검색조건</label>
+		<select name="condition" id="condition">
+			<option value="title_filename">제목+파일명</option>
+			<option value="title">제목</option>
+			<option value="writer">작성자</option>
+		</select>
+		<input type="text" name="keyword" placeholder="검색어..." />
+		<button type="submit">검색</button>
+	</form>
 </div>
 <script>
 	function deleteConfirm(num){

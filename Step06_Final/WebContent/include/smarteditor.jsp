@@ -1,32 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>/cafe/private/list.jsp</title>
-<jsp:include page="../../include/resource.jsp"></jsp:include>
-</head>
-<body>
-<jsp:include page="../../include/navbar.jsp">
-	<jsp:param value="cafe" name="thisPage"/>
-</jsp:include>
-<div class="container">
-	<h1>새글 작성 폼 입니다.</h1>
-	<form action="insert.jsp" method="post">
-		<div class="form-group">
-			<label for="title">제목</label>
-			<input class="form-control" type="text" name="title" id="title" />
-		</div>
-		<div class="form-group">
-			<label for="content">내용</label>
-			<textarea class="form-control" name="content" id="content"></textarea>
-		</div>
-		<button class="btn btn-primary" type="submit" onclick="submitContents(this)">저장</button>
-	
-	</form>
-
-</div>
 <%--
 	[ SmartEditor 를 사용하기 위한 설정 ]
 	
@@ -78,7 +51,8 @@
 		var sHTML = oEditors.getById["content"].getIR();
 		alert(sHTML);
 	}
-		
+	//폼 전송 버튼을 눌렀을때 호출되는 함수
+	//<button type="submit" onclick="submitContents(this)"></button>	
 	function submitContents(elClickedObj) {
 		oEditors.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);	// 에디터의 내용이 textarea에 적용됩니다.
 		
@@ -95,6 +69,3 @@
 		oEditors.getById["content"].setDefaultFont(sDefaultFont, nFontSize);
 	}
 </script>
-
-</body>
-</html>
