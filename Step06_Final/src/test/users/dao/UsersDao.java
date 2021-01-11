@@ -19,6 +19,40 @@ public class UsersDao {
 		}
 		return dao;
 	}
+	//프로필 이미지 경로를 수정하는 메소드
+	public boolean updateProfile(UsersDto dto) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		int flag = 0;
+		try {
+			conn = new DbcpBean().getConn();
+			//실행할 insert,update,delete문 구성
+			String sql = "UPDATE users SET profile=? WHERE id=?";
+			pstmt = conn.prepareStatement(sql);
+			//?에 바인딩할 내용이 있으면 바인딩한다.
+			pstmt.setString(1, dto.getProfile());
+			pstmt.setString(2, dto.getId());
+			//sql문 실행하고 변화된 row갯수 리턴받기
+			flag = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+			}
+		}
+		if (flag > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	
 	//인자로 전달된 아이디가 DB에 존재하는지 여부를 리턴하는 메소드
 	public boolean isExist(String id) {
 		//아이디가 이미 존재하는지 여부를 담을 지역변수 선언하고 초기값 지정
