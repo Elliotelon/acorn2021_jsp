@@ -41,8 +41,12 @@
 	}
 	String encodedK=URLEncoder.encode(keyword);
 	
+	List<FileDto> list=null;
 	
-	List<FileDto> list=FileDao.getInstance().getList(dto);
+	if(condition.equals("writer")){
+		dto.setWriter(keyword);
+		list=FileDao.getInstance().getListW(dto);
+	}
 	
 	int startPageNum=1+((pageNum-1)/PAGE_DISPLAY_COUNT)*PAGE_DISPLAY_COUNT;
 	int endPageNum=startPageNum+PAGE_DISPLAY_COUNT-1;
