@@ -53,9 +53,131 @@ public class FileDao {
 			return false;
 		}
 	}
+	//제목 파일명 검색인 경우의 row의 갯수
+	public int getCountTF(FileDto dto) {
+		int count=0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = new DbcpBean().getConn();
+			//select문 작성
+			String sql = "SELECT NVL(MAX(ROWNUM),0) AS num FROM board_file"
+					+ " WHERE title LIKE '%'||?||'%'"
+					+ " OR orgFileName LIKE '%'||?||'%'";
+			pstmt = conn.prepareStatement(sql);
+			// ? 에 바인딩 할게 있으면 여기서 바인딩한다.
+			/*
+			 * [title 검색 키워드가 "kim" 이라고 가정하면]
+			 * 값 바인딩 전
+			 * 1.title LIKE '%'||?||'%'
+			 * 값 바인딩 후
+			 * 2.title LIKE '%'||'kim'||'%'
+			 * 연결연산 후 아래와 같은 SELECT 문이 구성된다.
+			 * 3.title LIKE '%kim%'
+			 * 
+			 * 따라서 제목에 kim 이라는 문자열에 포함된 row가 SELECT 된다.
+			 */
+			pstmt.setString(1, dto.getTitle());
+			pstmt.setString(2, dto.getOrgFileName());
+			//select 문 수행하고 ResultSet 받아오기
+			rs = pstmt.executeQuery();
+			//while문 혹은 if문에서  ResultSet으로 부터 data 추출
+			if(rs.next()) {
+				count=rs.getInt("num");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return count;	
+	}
 	
+	//제목 검색인 경우의 row 갯수
+	public int getCountT(FileDto dto) {
+		int count=0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = new DbcpBean().getConn();
+			//select문 작성
+			String sql = "SELECT NVL(MAX(ROWNUM),0) AS num FROM board_file"
+					+ " WHERE title LIKE '%'||?||'%'";
+			pstmt = conn.prepareStatement(sql);
+			// ? 에 바인딩 할게 있으면 여기서 바인딩한다.
+			pstmt.setString(1, dto.getTitle());
+			//select 문 수행하고 ResultSet 받아오기
+			rs = pstmt.executeQuery();
+			//while문 혹은 if문에서  ResultSet으로 부터 data 추출
+			if(rs.next()) {
+				count=rs.getInt("num");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return count;
+	}
 	
-	//전체 자료의 갯수를 리턴하는 메소드
+	//작성자 검색인 경우의 row 갯수
+	public int getCountW(FileDto dto) {
+		int count=0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = new DbcpBean().getConn();
+			//select문 작성
+			String sql = "SELECT NVL(MAX(ROWNUM),0) AS num FROM board_file"
+					+ " WHERE writer LIKE '%'||?||'%'";
+			pstmt = conn.prepareStatement(sql);
+			// ? 에 바인딩 할게 있으면 여기서 바인딩한다.
+			pstmt.setString(1, dto.getWriter());
+			//select 문 수행하고 ResultSet 받아오기
+			rs = pstmt.executeQuery();
+			//while문 혹은 if문에서  ResultSet으로 부터 data 추출
+			if(rs.next()) {
+				count=rs.getInt("num");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return count;
+	}
+	
+	//전체 글의 갯수를 리턴하는 메소드
 	public int getCount() {
 		int count=0;
 		Connection conn = null;
@@ -185,7 +307,7 @@ public class FileDao {
 		return list;
 	}
 	
-	//업로드된 파일 목록을 리턴하는 메소드2
+	//작성자 검색인 경우에 파일 목록 리턴
 	public List<FileDto> getListW(FileDto dto){
 		List<FileDto> list=new ArrayList<FileDto>();
 		Connection conn = null;
@@ -235,7 +357,7 @@ public class FileDao {
 		return list;	
 	}
 	
-	//업로드된 파일 목록을 리턴하는 메소드3
+	//제목 검색인 경우에 파일 목록 리턴
 	public List<FileDto> getListT(FileDto dto){
 		List<FileDto> list=new ArrayList<FileDto>();
 		Connection conn = null;
@@ -285,7 +407,7 @@ public class FileDao {
 		return list;	
 	}
 		
-	//업로드된 파일 목록을 리턴하는 메소드4
+	//제목 파일명 검색인 경우에 파일 목록 리턴
 	public List<FileDto> getListTF(FileDto dto){
 		List<FileDto> list=new ArrayList<FileDto>();
 		Connection conn = null;
