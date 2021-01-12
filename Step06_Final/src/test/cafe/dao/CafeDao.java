@@ -18,6 +18,118 @@ public class CafeDao {
 		}
 		return dao;
 	}
+	//제목 내용 검색인 경우의 row의 갯수
+	public int getCountTC(CafeDto dto) {
+		int count=0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = new DbcpBean().getConn();
+			//select문 작성
+			String sql = "SELECT NVL(MAX(ROWNUM),0) AS num FROM board_cafe"
+					+ " WHERE title LIKE '%'||?||'%'"
+					+ " OR content LIKE '%'||?||'%'";
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setString(1, dto.getTitle());
+			pstmt.setString(2, dto.getContent());
+			//select 문 수행하고 ResultSet 받아오기
+			rs = pstmt.executeQuery();
+			//while문 혹은 if문에서  ResultSet으로 부터 data 추출
+			if(rs.next()) {
+				count=rs.getInt("num");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return count;	
+	}
+		
+	//제목 검색인 경우의 row 갯수
+	public int getCountT(CafeDto dto) {
+		int count=0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = new DbcpBean().getConn();
+			//select문 작성
+			String sql = "SELECT NVL(MAX(ROWNUM),0) AS num FROM board_cafe"
+					+ " WHERE title LIKE '%'||?||'%'";
+			pstmt = conn.prepareStatement(sql);
+			// ? 에 바인딩 할게 있으면 여기서 바인딩한다.
+			pstmt.setString(1, dto.getTitle());
+			//select 문 수행하고 ResultSet 받아오기
+			rs = pstmt.executeQuery();
+			//while문 혹은 if문에서  ResultSet으로 부터 data 추출
+			if(rs.next()) {
+				count=rs.getInt("num");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return count;
+	}
+	
+	//작성자 검색인 경우의 row 갯수
+	public int getCountW(CafeDto dto) {
+		int count=0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = new DbcpBean().getConn();
+			//select문 작성
+			String sql = "SELECT NVL(MAX(ROWNUM),0) AS num FROM board_cafe"
+					+ " WHERE writer LIKE '%'||?||'%'";
+			pstmt = conn.prepareStatement(sql);
+			// ? 에 바인딩 할게 있으면 여기서 바인딩한다.
+			pstmt.setString(1, dto.getWriter());
+			//select 문 수행하고 ResultSet 받아오기
+			rs = pstmt.executeQuery();
+			//while문 혹은 if문에서  ResultSet으로 부터 data 추출
+			if(rs.next()) {
+				count=rs.getInt("num");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return count;
+	}
 	//전체 글의 갯수를 리턴하는 메소드
 	public int getCount() {
 		int count=0;
@@ -235,7 +347,151 @@ public class CafeDao {
 			return false;
 		}
 	}
+	//작성자 검색인 경우에 파일 목록 리턴
+	public List<CafeDto> getListW(CafeDto dto){
+		List<CafeDto> list=new ArrayList<CafeDto>();
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = new DbcpBean().getConn();
+			//select문 작성
+			String sql = "SELECT*FROM (SELECT result1.*, ROWNUM AS rnum FROM"
+					+" (SELECT num,writer,title,viewCount,regdate FROM board_cafe WHERE writer LIKE '%'||?||'%' ORDER BY num DESC) result1)"
+					+" WHERE rnum BETWEEN ? AND ?";
+			
+			pstmt = conn.prepareStatement(sql);
+			// ? 에 바인딩 할게 있으면 여기서 바인딩한다.
+			pstmt.setString(1, dto.getWriter());
+			pstmt.setInt(2, dto.getStartRowNum());
+			pstmt.setInt(3, dto.getEndRowNum());
+			//select 문 수행하고 ResultSet 받아오기
+			rs = pstmt.executeQuery();
+			//while문 혹은 if문에서  ResultSet으로 부터 data 추출
+			while (rs.next()) {
+				CafeDto tmp=new CafeDto();
+				tmp.setNum(rs.getInt("num"));
+				tmp.setWriter(rs.getString("writer"));
+				tmp.setTitle(rs.getString("title"));
+				tmp.setViewCount(rs.getInt("viewCount"));
+				tmp.setRegdate(rs.getString("regdate"));
+				list.add(tmp);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
 	
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return list;	
+	}
+	
+	//제목 검색인 경우에 파일 목록 리턴
+	public List<CafeDto> getListT(CafeDto dto){
+		List<CafeDto> list=new ArrayList<CafeDto>();
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = new DbcpBean().getConn();
+			//select문 작성
+			String sql = "SELECT*FROM (SELECT result1.*, ROWNUM AS rnum FROM"
+					+" (SELECT num,writer,title,viewCount,regdate FROM board_cafe WHERE title LIKE '%'||?||'%' ORDER BY num DESC) result1)"
+					+" WHERE rnum BETWEEN ? AND ?";
+			
+			pstmt = conn.prepareStatement(sql);
+			// ? 에 바인딩 할게 있으면 여기서 바인딩한다.
+			pstmt.setString(1, dto.getTitle());
+			pstmt.setInt(2, dto.getStartRowNum());
+			pstmt.setInt(3, dto.getEndRowNum());
+			//select 문 수행하고 ResultSet 받아오기
+			rs = pstmt.executeQuery();
+			//while문 혹은 if문에서  ResultSet으로 부터 data 추출
+			while (rs.next()) {
+				CafeDto tmp=new CafeDto();
+				tmp.setNum(rs.getInt("num"));
+				tmp.setWriter(rs.getString("writer"));
+				tmp.setTitle(rs.getString("title"));
+				tmp.setViewCount(rs.getInt("viewCount"));
+				tmp.setRegdate(rs.getString("regdate"));
+				list.add(tmp);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+	
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return list;	
+	}
+		
+	//제목 파일명 검색인 경우에 파일 목록 리턴
+	public List<CafeDto> getListTC(CafeDto dto){
+		List<CafeDto> list=new ArrayList<CafeDto>();
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = new DbcpBean().getConn();
+			//select문 작성
+			String sql = "SELECT*FROM (SELECT result1.*, ROWNUM AS rnum FROM"
+					+" (SELECT num,writer,title,viewCount,regdate FROM board_cafe WHERE title LIKE '%'||?||'%' OR content LIKE '%'||?||'%' ORDER BY num DESC) result1)"
+					+" WHERE rnum BETWEEN ? AND ?";
+			
+			pstmt = conn.prepareStatement(sql);
+			// ? 에 바인딩 할게 있으면 여기서 바인딩한다.
+			pstmt.setString(1, dto.getTitle());
+			pstmt.setString(2, dto.getContent());
+			pstmt.setInt(3, dto.getStartRowNum());
+			pstmt.setInt(4, dto.getEndRowNum());
+			//select 문 수행하고 ResultSet 받아오기
+			rs = pstmt.executeQuery();
+			//while문 혹은 if문에서  ResultSet으로 부터 data 추출
+			while (rs.next()) {
+				CafeDto tmp=new CafeDto();
+				tmp.setNum(rs.getInt("num"));
+				tmp.setWriter(rs.getString("writer"));
+				tmp.setTitle(rs.getString("title"));
+				tmp.setViewCount(rs.getInt("viewCount"));
+				tmp.setRegdate(rs.getString("regdate"));
+				list.add(tmp);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+	
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return list;	
+	}
+		
 	//글 전체목록을 리턴해주는 메소드
 	public List<CafeDto> getList(CafeDto dto){
 		//리턴해줄 ArrayList 객체 생성

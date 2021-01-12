@@ -458,9 +458,6 @@ public class FileDao {
 		return list;	
 	}
 	
-	
-	
-	
 	//업로드된 파일 정보를 저장하는 메소드
 	public boolean insert(FileDto dto) {
 		Connection conn = null;

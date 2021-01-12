@@ -1,3 +1,4 @@
+<%@page import="java.net.URLEncoder"%>
 <%@page import="test.cafe.dao.CafeDao"%>
 <%@page import="test.cafe.dto.CafeDto"%>
 <%@page import="java.util.List"%>
@@ -23,19 +24,67 @@
 	//보여줄 페이지의 끝 ROWNUM
 	int endRowNum=pageNum*PAGE_ROW_COUNT;
 	
+	/*
+	[검색 키워드에 관련된 처리]
+	-검색 키워드가 파라미터로 넘어올수도 있고 안넘어 올수도 있다.
+	
+	*/
+	String keyword=request.getParameter("keyword");
+	String condition=request.getParameter("condition");
+	
+	//만일 키워드가 넘어오지 않는다면
+	if(keyword==null){
+		//키워드와 검색 조건에 빈문자열을 넣어 준다.
+		//클라이언트 웹브라우저에 출력할때 "null"을 출력되지 않게 하기 위해서
+		keyword="";
+		condition="";
+	}
+	//특수기호를 인코딩한 키워드를 미리 준비한다.
+	String encodedK=URLEncoder.encode(keyword);
+	
 	//startRowNum 과 endRowNum  을 CafeDto 객체에 담고
 	CafeDto dto=new CafeDto();
 	dto.setStartRowNum(startRowNum);
 	dto.setEndRowNum(endRowNum);
 	
-	//글목록 불러오기
-	List<CafeDto> list=CafeDao.getInstance().getList(dto);
+	//ArrayList 객체의 참조값을 담을 지역변수를 미리 만든다.
+	List<CafeDto> list=null;
+	//전체 row의 갯수를 담을 지역변수를 미리 만든다.
+	int totalRow=0;
+	
+	//만일 검색 키워드가 넘어온다면
+	if(!keyword.equals("")){
+		//검색 조건이 무엇이냐에 따라 분기하기
+		if(condition.equals("title_content")){// 제목+파일명 검색인 경우
+			//검색 키워드를 CafeDto에 담아서 전달한다.
+			dto.setTitle(keyword);
+			dto.setContent(keyword);
+			//제목+파일명 검색일때 호출하는 메소드를 이용해서 목록 얻어오기
+			list=CafeDao.getInstance().getListTC(dto);
+			//제목+파일명 검색일때 호출하는 메소드를 이용해서 row의 갯수 얻어오기
+			totalRow=CafeDao.getInstance().getCountTC(dto);
+		}else if(condition.equals("title")){// 제목 검색인 경우
+			dto.setTitle(keyword);
+			list=CafeDao.getInstance().getListT(dto);
+			totalRow=CafeDao.getInstance().getCountT(dto);
+		}else if(condition.equals("writer")){// 작성자 검색인 경우
+			dto.setWriter(keyword);
+			list=CafeDao.getInstance().getListW(dto);
+			totalRow=CafeDao.getInstance().getCountW(dto);
+		}//다른 검색 조건을 추가 하고 싶다면 아래에 else if()를 계속 추가하면 된다.
+		
+	}else{//검색 키워드가 넘어오지 않는다면
+		//키워드가 없을때 호출하는 메소드를 이용해서 파일 목록을 얻어온다.
+		list=CafeDao.getInstance().getList(dto);
+		//키워드가 없을때 호출하는 메소드를 이용해서 전체 row의 갯수를 얻어온다.
+		totalRow=CafeDao.getInstance().getCount();	
+	
+	}
 	
 	int startPageNum=1+((pageNum-1)/PAGE_DISPLAY_COUNT)*PAGE_DISPLAY_COUNT;
 	int endPageNum=startPageNum+PAGE_DISPLAY_COUNT-1;
 	
-	//전체 row의 갯수
-	int totalRow=CafeDao.getInstance().getCount();
+
 	
 	//전체 페이지의 갯수 구하기
 	int totalPageCount=(int)Math.ceil(totalRow/(double)PAGE_ROW_COUNT);
@@ -94,7 +143,7 @@
 	  <ul class="pagination justify-content-center">
 	  	<%if(startPageNum!=1){ %>
 		  	<li class="page-item">
-		  		<a class="page-link"href="list.jsp?pageNum=<%=startPageNum-1%>">Prev</a>
+		  		<a class="page-link"href="list.jsp?pageNum=<%=startPageNum-1%>&condition=<%=condition%>&keyword=<%=encodedK%>">Prev</a>
 		  	</li>	  	
 	  	<%}else{ %>
 	  		<li class="page-item disabled">
@@ -104,17 +153,17 @@
 	  	<%for(int i=startPageNum; i<=endPageNum; i++) {%>
     		<%if(i==pageNum){ %>
     			<li class="page-item active">
-		    		<a class="page-link" href="list.jsp?pageNum=<%=i %>"><%=i %></a>
+		    		<a class="page-link" href="list.jsp?pageNum=<%=i %>&condition=<%=condition%>&keyword=<%=encodedK%>"><%=i %></a>
 		    	</li>	
     		<%}else{ %>
     			<li class="page-item">
-		    		<a class="page-link" href="list.jsp?pageNum=<%=i %>"><%=i %></a>
+		    		<a class="page-link" href="list.jsp?pageNum=<%=i %>&condition=<%=condition%>&keyword=<%=encodedK%>"><%=i %></a>
 		    	</li>
 		    <%} %>
 	    <%} %>
 	    <%if(endPageNum<totalPageCount){ %>
 		    <li class="page-item">
-		    	<a class="page-link" href="list.jsp?pageNum=<%=endPageNum+1%>">Next</a>
+		    	<a class="page-link" href="list.jsp?pageNum=<%=endPageNum+1%>&condition=<%=condition%>&keyword=<%=encodedK%>">Next</a>
 		    </li>	    
 	    <%}else{ %>
 	    	<li class="page-item disabled">
@@ -123,6 +172,22 @@
 	    <%} %>
 	  </ul>
 	</nav>
+	<form action="list.jsp" method="get">
+		<label for="condition">검색조건</label>
+		<select name="condition" id="condition">
+			<option value="title_content" <%=condition.equals("title_content")?"selected":"" %>>제목+내용</option>
+			<option value="title"<%=condition.equals("title")?"selected":"" %>>제목</option>
+			<option value="writer"<%=condition.equals("writer")?"selected":"" %>>작성자</option>
+		</select>
+		<input type="text" name="keyword" placeholder="검색어..."  value=<%=keyword %>>
+		<button type="submit">검색</button>
+	</form>
+	<%-- 만일 검색 키워드가 존재한다면 몇개의 글이 검색 되었는지 알려준다. --%>
+	<%if(!keyword.equals("")){ %>
+		<div class="alert alert-success" style="width:275px">
+			<strong><%=totalRow %></strong> 개의 자료가 검색 되었습니다.
+		</div>	
+	<%} %>
 </div>
 </body>
 </html>

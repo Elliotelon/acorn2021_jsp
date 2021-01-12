@@ -192,7 +192,7 @@
 			<option value="title"<%=condition.equals("title")?"selected":"" %>>제목</option>
 			<option value="writer"<%=condition.equals("writer")?"selected":"" %>>작성자</option>
 		</select>
-		<input type="text" name="keyword" placeholder="검색어..." value=<%=keyword %> />
+		<input type="text" name="keyword" placeholder="검색어..." value=<%=keyword %>>
 		<button type="submit">검색</button>
 	</form>
 	<%-- 만일 검색 키워드가 존재한다면 몇개의 글이 검색 되었는지 알려준다. --%>
