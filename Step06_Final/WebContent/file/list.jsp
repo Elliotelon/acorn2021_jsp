@@ -42,7 +42,8 @@
 		keyword="";
 		condition="";
 	}
-	
+	//특수기호를 인코딩한 키워드를 미리 준비한다.
+	String encodedK=URLEncoder.encode(keyword);
 	
 	//startRowNum 과 endRowNum  을 CafeDto 객체에 담고
 	FileDto dto=new FileDto();
@@ -61,13 +62,18 @@
 			//검색 키워드를 FileDto에 담아서 전달한다.
 			dto.setTitle(keyword);
 			dto.setOrgFileName(keyword);
-			
+			//제목+파일명 검색일때 호출하는 메소드를 이용해서 목록 얻어오기
+			list=FileDao.getInstance().getListTF(dto);
+			//제목+파일명 검색일때 호출하는 메소드를 이용해서 row의 갯수 얻어오기
+			totalRow=FileDao.getInstance().getCountTF(dto);
 		}else if(condition.equals("title")){// 제목 검색인 경우
 			dto.setTitle(keyword);
-		
+			list=FileDao.getInstance().getListT(dto);
+			totalRow=FileDao.getInstance().getCountT(dto);
 		}else if(condition.equals("writer")){// 작성자 검색인 경우
 			dto.setWriter(keyword);
 			list=FileDao.getInstance().getListW(dto);
+			totalRow=FileDao.getInstance().getCountW(dto);
 		}//다른 검색 조건을 추가 하고 싶다면 아래에 else if()를 계속 추가하면 된다.
 		
 	}else{//검색 키워드가 넘어오지 않는다면
@@ -150,7 +156,7 @@
 	  <ul class="pagination justify-content-center">
 	  	<%if(startPageNum!=1){ %>
 		  	<li class="page-item">
-		  		<a class="page-link"href="list.jsp?pageNum=<%=startPageNum-1%>">Prev</a>
+		  		<a class="page-link"href="list.jsp?pageNum=<%=startPageNum-1%>&condition=<%=condition%>&keyword=<%=encodedK%>">Prev</a>
 		  	</li>	  	
 	  	<%}else{ %>
 	  		<li class="page-item disabled">
@@ -160,17 +166,17 @@
 	  	<%for(int i=startPageNum; i<=endPageNum; i++) {%>
     		<%if(i==pageNum){ %>
     			<li class="page-item active">
-		    		<a class="page-link" href="list.jsp?pageNum=<%=i %>"><%=i %></a>
+		    		<a class="page-link" href="list.jsp?pageNum=<%=i %>&condition=<%=condition%>&keyword=<%=encodedK%>"><%=i %></a>
 		    	</li>	
     		<%}else{ %>
     			<li class="page-item">
-		    		<a class="page-link" href="list.jsp?pageNum=<%=i %>"><%=i %></a>
+		    		<a class="page-link" href="list.jsp?pageNum=<%=i %>&condition=<%=condition%>&keyword=<%=encodedK%>"><%=i %></a>
 		    	</li>
 		    <%} %>
 	    <%} %>
 	    <%if(endPageNum<totalPageCount){ %>
 		    <li class="page-item">
-		    	<a class="page-link" href="list.jsp?pageNum=<%=endPageNum+1%>">Next</a>
+		    	<a class="page-link" href="list.jsp?pageNum=<%=endPageNum+1%>&condition=<%=condition%>&keyword=<%=encodedK%>">Next</a>
 		    </li>	    
 	    <%}else{ %>
 	    	<li class="page-item disabled">
@@ -182,13 +188,19 @@
 	<form action="list.jsp" method="get">
 		<label for="condition">검색조건</label>
 		<select name="condition" id="condition">
-			<option value="title_filename">제목+파일명</option>
-			<option value="title">제목</option>
-			<option value="writer">작성자</option>
+			<option value="title_filename" <%=condition.equals("title_filename")?"selected":"" %>>제목+파일명</option>
+			<option value="title"<%=condition.equals("title")?"selected":"" %>>제목</option>
+			<option value="writer"<%=condition.equals("writer")?"selected":"" %>>작성자</option>
 		</select>
-		<input type="text" name="keyword" placeholder="검색어..." />
+		<input type="text" name="keyword" placeholder="검색어..." value=<%=keyword %> />
 		<button type="submit">검색</button>
 	</form>
+	<%-- 만일 검색 키워드가 존재한다면 몇개의 글이 검색 되었는지 알려준다. --%>
+	<%if(!keyword.equals("")){ %>
+		<div class="alert alert-success" style="width:275px">
+			<strong><%=totalRow %></strong> 개의 자료가 검색 되었습니다.
+		</div>	
+	<%} %>
 </div>
 <script>
 	function deleteConfirm(num){
