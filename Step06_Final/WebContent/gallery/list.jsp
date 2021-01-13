@@ -41,6 +41,7 @@
 </jsp:include>
 <div class="container">
 	<a href="private/upload_form.jsp">사진 업로드</a>
+	<a href="private/ajax_form.jsp">사진 업로드2</a>
 	<h1>갤러리목록</h1>
 	<div class="row mb-2">
 		<%for(GalleryDto tmp:list){ %>
