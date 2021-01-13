@@ -19,13 +19,3 @@
 	String cPath=request.getContextPath();
 	response.sendRedirect(cPath+"/gallery/list.jsp");
 %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>/gallery/private/insert.jsp</title>
-</head>
-<body>
-
-</body>
-</html>

@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>test/ajax02.jsp</title>
+<title>test/ajax04.jsp</title>
 </head>
 <body>
 	<h1 class="aaa">폼 테스트</h1>
