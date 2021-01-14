@@ -8,10 +8,12 @@ public class GalleryDto {
 	private String regdate;
 	private int startRowNum;
 	private int endRowNum;
+	private int prevNum;
+	private int nextNum;
 	//디폴트 생성자
 	public GalleryDto() {}
 	public GalleryDto(int num, String writer, String caption, String imagePath, String regdate, int startRowNum,
-			int endRowNum) {
+			int endRowNum, int prevNum, int nextNum) {
 		super();
 		this.num = num;
 		this.writer = writer;
@@ -20,6 +22,8 @@ public class GalleryDto {
 		this.regdate = regdate;
 		this.startRowNum = startRowNum;
 		this.endRowNum = endRowNum;
+		this.prevNum = prevNum;
+		this.nextNum = nextNum;
 	}
 	public int getNum() {
 		return num;
@@ -62,6 +66,18 @@ public class GalleryDto {
 	}
 	public void setEndRowNum(int endRowNum) {
 		this.endRowNum = endRowNum;
+	}
+	public int getPrevNum() {
+		return prevNum;
+	}
+	public void setPrevNum(int prevNum) {
+		this.prevNum = prevNum;
+	}
+	public int getNextNum() {
+		return nextNum;
+	}
+	public void setNextNum(int nextNum) {
+		this.nextNum = nextNum;
 	}
 	
 	

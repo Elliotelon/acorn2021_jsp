@@ -29,7 +29,7 @@
 <div class="col-6 col-md-4 col-lg-3">
 	<div class="card mb-3">
 		<a href="detail.jsp?num=<%=tmp.getNum() %>">
-			<div class="img-wrapper">
+			<div class="img-wrapper page-<%=pageNum%>">
 				<img class="card-img-top" src="${pageContext.request.contextPath }<%=tmp.getImagePath() %>" />
 			</div>
 		</a>

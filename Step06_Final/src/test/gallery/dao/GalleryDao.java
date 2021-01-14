@@ -27,8 +27,13 @@ public class GalleryDao {
 		try {
 			conn = new DbcpBean().getConn();
 			//select문 작성
-			String sql = "SELECT num,writer,caption,imagePath,regdate"
-					+ " FROM board_gallery"
+			String sql = "SELECT"
+					+ " *FROM"
+					+ "  (SELECT num,writer,caption,imagePath,regdate,"
+					+ "  LAG(num,1,0) OVER (ORDER BY num DESC) AS prevNum,"
+					+ "  LEAD(num,1,0) OVER (ORDER BY num DESC) AS nextNum"
+					+ "  FROM board_gallery"
+					+ "  ORDER BY num DESC)"
 					+ " WHERE num=?";
 			pstmt = conn.prepareStatement(sql);
 			// ? 에 바인딩 할게 있으면 여기서 바인딩한다.
@@ -43,6 +48,8 @@ public class GalleryDao {
 				dto.setCaption(rs.getString("caption"));
 				dto.setImagePath(rs.getString("imagePath"));
 				dto.setRegdate(rs.getString("regdate"));
+				dto.setPrevNum(rs.getInt("prevNum"));
+				dto.setNextNum(rs.getInt("nextNum"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
