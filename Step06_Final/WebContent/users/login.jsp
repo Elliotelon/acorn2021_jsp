@@ -56,7 +56,7 @@
 		session.setAttribute("id",id);%>
 		<p>
 			<strong><%=id %></strong>님 로그인 되었습니다.
-			<a href="loginform.jsp">확인</a>
+			<a href="<%=url%>">확인</a>
 		</p>
 	<%}else{ %>
 		<p>
