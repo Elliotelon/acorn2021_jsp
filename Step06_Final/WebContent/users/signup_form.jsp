@@ -104,8 +104,8 @@
 		let pwd2=$("#pwd2").val();
 		//일단 모든 검증 클래스를 제거하고
 		$("#pwd").removeClass("is-valid is-invalid");
-		let result=reg_pwd.test(pwd);
-		//만일 비밀번호를 5글자 이상 입력하지 않았다면
+		let result=reg_pwd.test(pwd);		
+		//비밀번호가 정규표현식에 매칭되지 않으면
 		if(!result){
 			//비밀번호가 유효하지 않는다고 표시하고
 			$("#pwd").addClass("is-invalid");
@@ -132,6 +132,7 @@
 		let result=reg_email.test(inputEmail);
 		//모든 검증 클래스 제거
 		$("#email").removeClass("is-valid is-invalid");
+		//만일 이메일이 정규표현식에 매칭되지 않는다면
 		if(!result){
 			//이메일이 유효하지 않다고 표시하고
 			$("#email").addClass("is-invalid");
@@ -147,7 +148,8 @@
 		//1.입력한 아이디 읽어와서
 		let inputId=$("#id").val();
 		let result=reg_id.test(inputId);
-		
+		//일단 모든 검증 클래스를 제거하고
+		$("#id").removeClass("is-valid is-invalid");
 		if(!result){
 			//아이디가 유효하지 않다고 표시하고
 			$("#id").addClass("is-invalid");
@@ -158,8 +160,7 @@
 		}
 		
 		//2. 서버에 ajax 요청으로 보내서 사용 가능 여부를 응답 받아서 반응을 보여준다.
-		//일단 모든 검증 클래스를 제거하고
-		$("#id").removeClass("is-valid is-invalid");
+		
 		$.ajax({
 			url:"checkid.jsp",
 			method:"GET",
