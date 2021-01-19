@@ -50,7 +50,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>/gallery/list2.jsp</title>
+<title>/Gallery/list2.jsp</title>
 <jsp:include page="../include/resource.jsp"></jsp:include>
 <!-- 
 	jquery 플러그인 imgLiquid.js 로딩하기
@@ -115,14 +115,16 @@
 </head>
 <body>
 <jsp:include page="../include/navbar.jsp">
-	<jsp:param value="gallery" name="thisPage"/>
+	<jsp:param value="Gallery" name="thisPage"/>
 </jsp:include>
 <div class="container">
 	<a href="private/upload_form.jsp">사진 업로드 하러 가기</a><br/>
 	<a href="private/ajax_form.jsp">사진 업로드 하러 가기2</a>
 	<h1>겔러리 목록 입니다.</h1>
-	<div class="row" id="galleryList">
-		<%for(GalleryDto tmp:list){ %>
+	<div class="row" id="GalleryList">
+		<%
+			for(GalleryDto tmp:list){
+		%>
 		<!-- 
 			[ 칼럼의 폭을 반응형으로 ]
 			device 폭 768px 미만에서  칼럼의 폭 => 6/12 (50%)
@@ -189,8 +191,8 @@
 				success:function(data){
 					console.log(data);
 					//응답된 문자열은 html 형식이다 
-					//해당 문자열을 #galleryList div 에 html 로 해석하라고 추가한다.
-					$("#galleryList").append(data);
+					//해당 문자열을 #GalleryList div 에 html 로 해석하라고 추가한다.
+					$("#GalleryList").append(data);
 					//로딩바를 숨긴다
 					$(".back-drop").hide();
 					//현재 추가된 img 요소 부모 div를 선택해서 imgLiquid()동작하기

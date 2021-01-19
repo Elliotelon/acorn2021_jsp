@@ -1,5 +1,5 @@
-<%@page import="test.gallery.dto.GalleryDto"%>
-<%@page import="test.gallery.dao.GalleryDao"%>
+<%@page import="test.mypic.dao.MypicDao"%>
+<%@page import="test.mypic.dto.MypicDto"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -24,13 +24,13 @@
 	//보여줄 페이지의 끝 ROWNUM
 	int endRowNum=pageNum*PAGE_ROW_COUNT;
 	
-	//startRowNum 과 endRowNum  을 GalleryDto 객체에 담고
-	GalleryDto dto=new GalleryDto();
+	//startRowNum 과 endRowNum  을 MypicDto 객체에 담고
+	MypicDto dto=new MypicDto();
 	dto.setStartRowNum(startRowNum);
 	dto.setEndRowNum(endRowNum);
 	
-	//GalleryDao 객체를 이용해서 회원 목록을 얻어온다.
-	List<GalleryDto> list=GalleryDao.getInstance().getList(dto);
+	//MypicDao 객체를 이용해서 회원 목록을 얻어온다.
+	List<MypicDto> list=MypicDao.getInstance().getList(dto);
 	
 	//하단 시작 페이지 번호 
 	int startPageNum = 1 + ((pageNum-1)/PAGE_DISPLAY_COUNT)*PAGE_DISPLAY_COUNT;
@@ -38,7 +38,7 @@
 	int endPageNum=startPageNum+PAGE_DISPLAY_COUNT-1;
 	
 	//전체 row 의 갯수
-	int totalRow=GalleryDao.getInstance().getCount();
+	int totalRow=MypicDao.getInstance().getCount();
 	//전체 페이지의 갯수 구하기
 	int totalPageCount=(int)Math.ceil(totalRow/(double)PAGE_ROW_COUNT);
 	//끝 페이지 번호가 이미 전체 페이지 갯수보다 크게 계산되었다면 잘못된 값이다.
@@ -50,7 +50,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>/gallery/list.jsp</title>
+<title>/all/list.jsp</title>
 <jsp:include page="../include/resource.jsp"></jsp:include>
 <!-- 
 	jquery 플러그인 imgLiquid.js 로딩하기
@@ -80,16 +80,13 @@
 </style>
 </head>
 <body>
-<jsp:include page="../include/navbar.jsp">
-	<jsp:param value="gallery" name="thisPage"/>
-</jsp:include>
+
 <div class="container">
-	<a href="private/upload_form.jsp">사진 업로드 하러 가기</a><br/>
-	<a href="private/ajax_form.jsp">사진 업로드 하러 가기2</a>
-	<h1>겔러리 목록 입니다.</h1>
+	<jsp:include page="../include/blogbasic.jsp"></jsp:include>
+	<a href="private/ajax_form.jsp">사진 업로드 하러 가기</a>
 	<div class="row">
 		<%
-			for(GalleryDto tmp:list){
+			for(MypicDto tmp:list){
 		%>
 		<!-- 
 			[ 칼럼의 폭을 반응형으로 ]

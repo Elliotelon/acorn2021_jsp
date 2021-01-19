@@ -1,6 +1,6 @@
-<%@page import="test.gallery.dao.GalleryDao"%>
+<%@page import="test.mypic.dao.MypicDao"%>
+<%@page import="test.mypic.dto.MypicDto"%>
 <%@page import="java.util.List"%>
-<%@page import="test.gallery.dto.GalleryDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
@@ -17,16 +17,16 @@
 	//보여줄 페이지의 끝 ROWNUM
 	int endRowNum=pageNum*PAGE_ROW_COUNT;
 	
-	//startRowNum 과 endRowNum  을 GalleryDto 객체에 담고
-	GalleryDto dto=new GalleryDto();
+	//startRowNum 과 endRowNum  을 MypicDto 객체에 담고
+	MypicDto dto=new MypicDto();
 	dto.setStartRowNum(startRowNum);
 	dto.setEndRowNum(endRowNum);
 	
-	//GalleryDao 객체를 이용해서 회원 목록을 얻어온다.
-	List<GalleryDto> list=GalleryDao.getInstance().getList(dto);
+	//MypicDao 객체를 이용해서 회원 목록을 얻어온다.
+	List<MypicDto> list=MypicDao.getInstance().getList(dto);
 %>    
 <%
-    	for(GalleryDto tmp:list){
+    	for(MypicDto tmp:list){
     %>
 <div class="col-6 col-md-4 col-lg-3">
 	<div class="card mb-3">

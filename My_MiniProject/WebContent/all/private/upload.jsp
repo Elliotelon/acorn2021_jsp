@@ -1,5 +1,5 @@
-<%@page import="test.gallery.dao.GalleryDao"%>
-<%@page import="test.gallery.dto.GalleryDto"%>
+<%@page import="test.mypic.dao.MypicDao"%>
+<%@page import="test.mypic.dto.MypicDto"%>
 <%@page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy"%>
 <%@page import="com.oreilly.servlet.MultipartRequest"%>
 <%@page import="java.io.File"%>
@@ -49,13 +49,13 @@
 	//작성자
 	String writer=(String)session.getAttribute("id");
 	
-	//업로드된 파일의 정보를 GalleryDto에 담고
-	GalleryDto dto=new GalleryDto();
+	//업로드된 파일의 정보를 MypicDto에 담고
+	MypicDto dto=new MypicDto();
 	dto.setWriter(writer);
 	dto.setCaption(caption);
 	dto.setImagePath("/upload/"+saveFileName);
 	//DB에 저장하고
-	GalleryDao.getInstance().insert(dto);
+	MypicDao.getInstance().insert(dto);
 	//응답하기
 	String cPath=request.getContextPath();
 	response.sendRedirect(cPath+"/gallery/list.jsp");
