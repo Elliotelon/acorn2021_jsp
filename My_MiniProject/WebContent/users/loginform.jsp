@@ -102,6 +102,8 @@
 	</div>
 	<button class="btn btn-lg btn-dark btn-block" type="submit">로그인</button>
 	<p class="mt-5 mb-3 text-muted">&copy; 2017-2020</p>
+	<jsp:include page="../include/blogfooter.jsp"></jsp:include>
 </form>
+
 </body>
 </html>

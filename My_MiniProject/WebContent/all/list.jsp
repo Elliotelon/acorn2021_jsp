@@ -143,6 +143,7 @@
 			<%} %>
 		</ul>
 	</nav>	
+	<jsp:include page="../include/blogfooter.jsp"></jsp:include>
 </div>
 <script>
 	// card 이미지의 부모 요소를 선택해서 imgLiquid  동작(jquery plugin 동작) 하기 
