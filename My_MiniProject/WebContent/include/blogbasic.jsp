@@ -24,7 +24,7 @@
 	        	</a>
 				<c:choose>
 					<c:when test="${not empty sessionScope.id }">
-						<a class="btn btn-sm btn-outline-info" href="${pageContext.request.contextPath}/users/private/info.jsp">개인정보</a>
+						<a class="btn btn-sm btn-outline-primary" href="${pageContext.request.contextPath}/users/private/info.jsp">개인정보</a>
 						<a class="btn btn-sm btn-outline-danger ml-1" href="${pageContext.request.contextPath}/users/logout.jsp">로그아웃</a>
 					</c:when>
 					
@@ -47,7 +47,7 @@
 	      <a class="p-2 text-muted" href="#">LOOKBOOK</a>
 	      <a class="p-2 text-muted" href="#">About</a>
 	      <a class="p-2 text-muted" href="#">Review</a>
-	      <a class="p-2 text-muted" href="#">Personal Pay</a>
+	      <a class="p-2 text-muted" href="${pageContext.request.contextPath}/file/list.jsp">Files</a>
 	      <a class="p-2 text-muted" href="${pageContext.request.contextPath}/qa/list.jsp">Q&A</a>
 	      <a class="p-2 text-muted" href="#">주문조회</a>
 	    </nav>

@@ -80,12 +80,14 @@
 	#con{
 		margin-top:5rem;
 	}
+	.card-body{
+		color:black;
+	}
 </style>
 </head>
 <body>
 <jsp:include page="../include/blogbasic.jsp"></jsp:include>
 <div class="container" id="con">	
-	<a href="private/ajax_form.jsp">사진 업로드 하러 가기</a>
 	<div class="row">
 		<%
 			for(MypicDto tmp:list){
@@ -97,54 +99,57 @@
 			device 폭 992  이상에서  칼럼의 폭 => 3/12 (25%)
 		 -->
 		<div class="col-6 col-md-4 col-lg-3">
-			<a href="detail.jsp?num=<%=tmp.getNum() %>">
-				<div class="card mb-3">
+			<div class="card mb-3">
+				<a href="detail.jsp?num=<%=tmp.getNum() %>">
 					<div class="img-wrapper">
 						<img class="card-img-top" src="${pageContext.request.contextPath }<%=tmp.getImagePath() %>" />
 					</div>
-					<div class="card-body">
-						<p class="card-text"><%=tmp.getCaption() %></p>
-						<p class="card-text">by <strong><%=tmp.getWriter() %></strong></p>
-						<p><small><%=tmp.getRegdate() %></small></p>
-					</div>
+				</a>
+				<div class="card-body">
+					<p class="card-text"><%=tmp.getCaption() %></p>
 				</div>
-			</a>
+			</div>
 		</div>
 		<%} %>
 	</div>
+	<a href="private/ajax_form.jsp">
+		<button class="btn btn-success btn-xs float-right" >업로드</button>
+	</a>
 	<nav>
 		<ul class="pagination justify-content-center">
 			<%if(startPageNum != 1){ %>
 				<li class="page-item">
-					<a class="page-link" href="list.jsp?pageNum=<%=startPageNum-1 %>">Prev</a>
+					<a class="page-link" href="list.jsp?pageNum=<%=startPageNum-1 %>"><</a>
 				</li>
 			<%}else{ %>
 				<li class="page-item disabled">
-					<a class="page-link" href="javascript:">Prev</a>
+					<a class="page-link" href="javascript:"><</a>
 				</li>
 			<%} %>
 			<%for(int i=startPageNum; i<=endPageNum; i++) {%>
 				<%if(i==pageNum){ %>
-					<li class="page-item active">
-						<a class="page-link" href="list.jsp?pageNum=<%=i %>"><%=i %></a>
+					<li class="page-item">
+						<a class="page-link" href="list.jsp?pageNum=<%=i %>"
+						style='color:black<%=i==pageNum ? "; background-color:#EAEAEA; border-color:#EAEAEA":""%>'><%=i %></a>
 					</li>
 				<%}else{ %>
 					<li class="page-item">
-						<a class="page-link" href="list.jsp?pageNum=<%=i %>"><%=i %></a>
+						<a class="page-link" href="list.jsp?pageNum=<%=i %>"
+						style='color:black;'><%=i %></a>
 					</li>
 				<%} %>
 			<%} %>
 			<%if(endPageNum < totalPageCount){ %>
 				<li class="page-item">
-					<a class="page-link" href="list.jsp?pageNum=<%=endPageNum+1 %>">Next</a>
+					<a class="page-link" href="list.jsp?pageNum=<%=endPageNum+1 %>">></a>
 				</li>
 			<%}else{ %>
 				<li class="page-item disabled">
-					<a class="page-link" href="javascript:">Next</a>
+					<a class="page-link" href="javascript:">></a>
 				</li>
 			<%} %>
 		</ul>
-	</nav>	
+	</nav>		
 	<jsp:include page="../include/blogfooter.jsp"></jsp:include>
 </div>
 <script>

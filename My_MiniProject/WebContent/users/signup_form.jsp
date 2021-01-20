@@ -6,10 +6,18 @@
 <meta charset="UTF-8">
 <title>/users/signup_form.jsp</title>
 <jsp:include page="../include/resource.jsp"></jsp:include>
+<style>
+	#con{
+		margin-top:5rem;
+	}
+	.form-group{
+		width:20rem;
+	}
+</style>
 </head>
 <body>
-<div class="container">
-	<h1>회원 가입 폼 입니다.</h1>
+<jsp:include page="../include/blogbasic.jsp"></jsp:include>
+<div class="container" id="con">
 	<!-- 
 		
 		[novalidate로 웹 브라우저 자체의 검증기능 사용하지 않기!]
@@ -39,8 +47,11 @@
 			<input class="form-control" type="email" name="email" id="email"/>
 			<div class="invalid-feedback">이메일 형식을 확인 하세요.</div>
 		</div>
-		<button class="btn btn-outline-primary" type="submit">가입</button>
+		<div class="form-inline mb-5 justify-content-start">
+			<button class="btn btn-info" type="submit">가입</button>
+		</div>
 	</form>
+	<jsp:include page="../include/blogfooter.jsp"></jsp:include>
 </div>
 <script>
 	//[아이디를 검증할 정규 표현식]

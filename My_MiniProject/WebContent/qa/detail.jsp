@@ -17,11 +17,19 @@
 <meta charset="UTF-8">
 <title>/qa/detail.jsp</title>
 <jsp:include page="../include/resource.jsp"></jsp:include>
+<style>
+	#con{
+		margin-top:5rem;
+	}
+	#tab{
+		margin-top:-3rem;
+	}
+</style>
 </head>
 <body>
-<div class="container">
-	<h1>글 상세 페이지</h1>
-	<table class="table table-bordered">
+<jsp:include page="../include/blogbasic.jsp"></jsp:include>
+<div class="container" id="con">
+	<table class="table table-bordered bg-light">
 		<tr>
 			<th>글번호</th>
 			<td><%=dto.getNum() %></td>
@@ -42,25 +50,42 @@
 			<th>등록일</th>
 			<td><%=dto.getRegdate() %></td>
 		</tr>
-		<tr>
-			<td colspan="2">
-				<div><%=dto.getContent() %></div>
-			</td>
-		</tr>
 	</table>
+	<table class="table table-borderless bg-light" id="tab">
+		<div class="form-group">
+			<label for="textarea">
+				<tr>
+					<th>내용</th>
+				</tr>
+			</label>
+			<tr>
+				<td>
+				    <textarea class="form-control" id="textarea" rows="3"><%=dto.getContent() %></textarea>			
+				</td>			
+			</tr>
+		</div>
+	</table>
+	
 	<%
 		//session scope 에서 로그인된 아이디를 읽어와 본다. ( null 일수도 있음 )
 		String id=(String)session.getAttribute("id");
 	%>
-	<ul>
-		<li><a href="list.jsp">목록보기</a></li>
+	<div class="form-inline mb-5 justify-content-end">
 		<%if(dto.getWriter().equals(id)){ %>
-			<li><a href="private/updateform.jsp?num=<%=dto.getNum()%>">수정</a></li>
-			<li><a href="javascript:deleteConfirm()">삭제</a></li>
+			<a href="private/updateform.jsp?num=<%=dto.getNum()%>">
+				<button class="btn btn-success btn-xs" >수정</button>
+			</a>
+			<a href="javascript:deleteConfirm()">
+				<button class="btn btn-danger btn-xs ml-1" >삭제</button>
+			</a>
 		<%} %>
-	</ul>
+		<a href="list.jsp">
+			<button class="btn btn-info btn-xs ml-1" >목록</button>
+		</a>
+	</div>
 	<jsp:include page="../include/blogfooter.jsp"></jsp:include>
 </div>
+
 <script>
 	function deleteConfirm(){
 		let isDelete=confirm("글을 삭제 하시겠습니까?");

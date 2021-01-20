@@ -20,9 +20,16 @@
 	#profileForm{
 		display: none;
 	}
+	#con{
+		margin-top:5rem;
+	}
+	.form-group{
+		width:20rem;
+	}
 </style>
 </head>
 <body>
+<jsp:include page="../../include/blogbasic.jsp"></jsp:include>
 <%
 	//세션 영역에 저장된 아이디를 이용해서
 	String id=(String)session.getAttribute("id");
@@ -30,8 +37,7 @@
 	UsersDto dto=UsersDao.getInstance().getData(id);
 
 %>
-<div class="container">
-	<h1>가입정보 수정 폼 입니다.</h1>
+<div class="container" id="con">
 	<a id="profileLink" href="javascript:">
 		<%if(dto.getProfile()==null){ %>
 			<svg id="profileImage" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
@@ -42,16 +48,18 @@
 		<%} %>	
 	</a>
 	<form action="update.jsp" method="post">
-		<div>
+		<div class="form-group">
 			<label for="id">아이디</label>
-			<input type="text" id="id" value="<%=dto.getId() %>" disabled />
+			<input class="form-control" type="text" id="id" value="<%=dto.getId() %>" disabled />
 		</div>
-		<div>
+		<div class="form-group">
 			<label for="email">이메일</label>
-			<input type="email" id="email" name="email" value="<%=dto.getEmail() %>" />
+			<input class="form-control" type="email" id="email" name="email" value="<%=dto.getEmail() %>" />
 		</div>
-		<button type="submit">수정확인</button>
-		<button type="reset">취소</button>
+		<div class="form-inline mb-5 justify-content-start">		
+			<button class="btn btn-success btn-xs" type="submit">수정</button>
+			<button class="btn btn-warning btn-xs ml-1" type="reset">취소</button>
+		</div>
 	</form>
 	<form action="profile_upload.jsp" method="post"
 		 enctype="multipart/form-data" id="profileForm">
@@ -59,6 +67,7 @@
 		<input type="file" name="image" id="image" accept=".jpg, .jpeg, .png, .JPG, .JPEG" />
 		<button type="submit">업로드</button>
 	</form>
+	<jsp:include page="../../include/blogfooter.jsp"></jsp:include>
 </div>
 <script>
 	//프로필 링크를 클릭했을때 실행 할 함수 등록

@@ -1,3 +1,4 @@
+<%@page import="java.io.PrintWriter"%>
 <%@page import="test.users.dao.UsersDao"%>
 <%@page import="test.users.dto.UsersDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -23,19 +24,16 @@
 <title>/users/signup.jsp</title>
 </head>
 <body>
-<div class="container">
-	<h1>알림</h1>
-	<%if(isSuccess){ %>
-		<p>
-			<strong><%=id %></strong> 회원님 가입 되었습니다.
-			<a href="loginform.jsp">로그인 하러가기</a>
-		</p>
-	<%}else{ %>
-		<p>
-			가입이 실패 했습니다.
-			<a href="signup_form.jsp">다시 가입</a>
-		</p>
-	<%} %>
-</div>
+<script>
+<%if(isSuccess){
+	session.setAttribute("id",id);
+%>
+	alert("가입성공! 로그인 해주세요!");
+	location.href="loginform.jsp";
+<%}else{%>
+	alert("가입실패! 다시 가입해주세요!");
+	location.href="signip_form.jsp"
+<%}%>
+</script>
 </body>
 </html>

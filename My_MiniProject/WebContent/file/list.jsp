@@ -106,24 +106,23 @@
 <meta charset="UTF-8">
 <title>/file/list.jsp</title>
 <jsp:include page="../include/resource.jsp"></jsp:include>
+<style>
+	#con{
+		margin-top:5rem;
+	}
+</style>
 </head>
 <body>
-<jsp:include page="../include/navbar.jsp">
-	<jsp:param value="file" name="thisPage"/>
-</jsp:include>
-<div class="container">
-	<nav>
-		<ul class="breadcrumb">
-			<li class="breadcrumb-item">
-				<a href="${pageContext.request.contextPath }/">Home</a>
-			</li>
-			<li class="breadcrumb-item active">자료실목록</li>
-		</ul>
-	</nav>
-	<a href="private/upload_form.jsp">업로드 하러가기</a>
-	<h1>자료실 목록 입니다.</h1>
-	<table class="table table-striped">
-		<thead class="table-dark">
+<jsp:include page="../include/blogbasic.jsp"></jsp:include>
+<div class="container" id="con">
+	<%-- 만일 검색 키워드가 존재한다면 몇개의 글이 검색 되었는지 알려준다. --%>
+	<%if(!keyword.equals("")){ %>
+		<div class="alert alert-info" style="width:275px">
+			<strong><%=totalRow %></strong> 개의 자료가 검색 되었습니다.
+		</div>	
+	<%} %>
+	<table class="table table-hover table-sm">
+		<thead>
 			<tr>
 				<th>번호</th>
 				<th>작성자</th>
@@ -140,67 +139,72 @@
 				<td><%=tmp.getNum() %></td>
 				<td><%=tmp.getWriter() %></td>
 				<td><%=tmp.getTitle() %></td>
-				<td><a href="download.jsp?num=<%=tmp.getNum()%>"><%=tmp.getOrgFileName() %></a></td>
+				<td><a style="color:#5991A8"; href="download.jsp?num=<%=tmp.getNum()%>"><%=tmp.getOrgFileName() %></a></td>
 				<td><%=tmp.getFileSize() %></td>
 				<td><%=tmp.getRegdate() %></td>
 				<td>
 				<%if(tmp.getWriter().equals(id)){ %>
-					<a href="javascript:deleteConfirm(<%=tmp.getNum()%>)">삭제</a>
+					<a href="javascript:deleteConfirm(<%=tmp.getNum()%>)">
+						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#5991A8" class="bi bi-trash" viewBox="0 0 16 16">
+						  <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+						  <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+						</svg>
+					</a>
 				<%} %>
 				</td>
 			</tr>
 		<%} %>
 		</tbody>
 	</table>
+	<a href="private/upload_form.jsp">
+		<button class="btn btn-success btn-xs float-right" >업로드</button>
+	</a>
 	<nav>
 	  <ul class="pagination justify-content-center">
 	  	<%if(startPageNum!=1){ %>
 		  	<li class="page-item">
-		  		<a class="page-link"href="list.jsp?pageNum=<%=startPageNum-1%>&condition=<%=condition%>&keyword=<%=encodedK%>">Prev</a>
+		  		<a class="page-link"href="list.jsp?pageNum=<%=startPageNum-1%>&condition=<%=condition%>&keyword=<%=encodedK%>"><</a>
 		  	</li>	  	
 	  	<%}else{ %>
 	  		<li class="page-item disabled">
-		  		<a class="page-link" href="javascript:">Prev</a>
+		  		<a class="page-link" href="javascript:"><</a>
 		  	</li>
 	  	<%} %>
 	  	<%for(int i=startPageNum; i<=endPageNum; i++) {%>
     		<%if(i==pageNum){ %>
     			<li class="page-item active">
-		    		<a class="page-link" href="list.jsp?pageNum=<%=i %>&condition=<%=condition%>&keyword=<%=encodedK%>"><%=i %></a>
+		    		<a class="page-link" href="list.jsp?pageNum=<%=i %>&condition=<%=condition%>&keyword=<%=encodedK%>"
+		    		style='color:black<%=i==pageNum ? "; background-color:#EAEAEA; border-color:#EAEAEA":""%>'><%=i %></a>
 		    	</li>	
     		<%}else{ %>
     			<li class="page-item">
-		    		<a class="page-link" href="list.jsp?pageNum=<%=i %>&condition=<%=condition%>&keyword=<%=encodedK%>"><%=i %></a>
+		    		<a class="page-link" href="list.jsp?pageNum=<%=i %>&condition=<%=condition%>&keyword=<%=encodedK%>"
+		    		style='color:black';><%=i %></a>
 		    	</li>
 		    <%} %>
 	    <%} %>
 	    <%if(endPageNum<totalPageCount){ %>
 		    <li class="page-item">
-		    	<a class="page-link" href="list.jsp?pageNum=<%=endPageNum+1%>&condition=<%=condition%>&keyword=<%=encodedK%>">Next</a>
+		    	<a class="page-link" href="list.jsp?pageNum=<%=endPageNum+1%>&condition=<%=condition%>&keyword=<%=encodedK%>">></a>
 		    </li>	    
 	    <%}else{ %>
 	    	<li class="page-item disabled">
-		    	<a class="page-link" href="javascript:">Next</a>
+		    	<a class="page-link" href="javascript:">></a>
 		    </li>
 	    <%} %>
 	  </ul>
 	</nav>
-	<form action="list.jsp" method="get">
-		<label for="condition">검색조건</label>
-		<select name="condition" id="condition">
+	<form class="form-inline mb-5" action="list.jsp" method="get">
+		<label class="input-group-text" for="condition">검색조건</label>
+		<select class="custom-select" name="condition" id="condition">
 			<option value="title_filename" <%=condition.equals("title_filename")?"selected":"" %>>제목+파일명</option>
 			<option value="title"<%=condition.equals("title")?"selected":"" %>>제목</option>
 			<option value="writer"<%=condition.equals("writer")?"selected":"" %>>작성자</option>
 		</select>
-		<input type="text" name="keyword" placeholder="검색어..." value=<%=keyword %>>
-		<button type="submit">검색</button>
+		<input class="form-control ml-1" type="text" name="keyword" placeholder="검색어..." value=<%=keyword %>>
+		<button class="form-control btn btn-info btn-xs ml-1" type="submit">검색</button>
 	</form>
-	<%-- 만일 검색 키워드가 존재한다면 몇개의 글이 검색 되었는지 알려준다. --%>
-	<%if(!keyword.equals("")){ %>
-		<div class="alert alert-success" style="width:275px">
-			<strong><%=totalRow %></strong> 개의 자료가 검색 되었습니다.
-		</div>	
-	<%} %>
+	<jsp:include page="../include/blogfooter.jsp"></jsp:include>
 </div>
 <script>
 	function deleteConfirm(num){

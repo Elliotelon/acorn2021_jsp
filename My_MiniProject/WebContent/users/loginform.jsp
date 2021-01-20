@@ -91,7 +91,7 @@
 	<%--원래 가려던 목적지 정보를 url 이라는 파라미터 명으로 전송될수 있도록한다. --%>
 	<input type="hidden" name="url" value="<%=url %>" />
 	<div class="text-center mb-3">
-        <h1 class="blog-header-logo text-dark">#Login</h1>
+        <h1 class="blog-header-logo text-dark">#HashTag</h1>
     </div>
 	<label for="id" class="sr-only">아이디</label>
 	<input type="text" id="id" name="id" class="form-control" placeholder="아이디 입력..." value="<%=savedId%>" required autofocus>

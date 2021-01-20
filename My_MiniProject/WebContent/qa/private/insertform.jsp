@@ -6,12 +6,20 @@
 <meta charset="UTF-8">
 <title>/cafe/private/list.jsp</title>
 <jsp:include page="../../include/resource.jsp"></jsp:include>
+<style>
+	#con{
+		margin-top:5rem;
+	}
+	#di{
+		width:10rem;
+	}
+</style>
 </head>
 <body>
-<div class="container">
-	<h1>새글 작성 폼 입니다.</h1>
+<jsp:include page="../../include/blogbasic.jsp"></jsp:include>
+<div class="container" id="con">
 	<form action="insert.jsp" method="post">
-		<div class="form-group">
+		<div class="form-group" id="di">
 			<label for="title">제목</label>
 			<input class="form-control" type="text" name="title" id="title" />
 		</div>
@@ -19,10 +27,11 @@
 			<label for="content">내용</label>
 			<textarea class="form-control" name="content" id="content"></textarea>
 		</div>
-		<button class="btn btn-primary" type="submit" onclick="submitContents(this)">저장</button>
-	
+		<div class="form-inline mb-5 justify-content-start">
+			<button class="btn btn-success" type="submit" onclick="submitContents(this)">저장</button>
+		</div>
 	</form>
-
+	<jsp:include page="../../include/blogfooter.jsp"></jsp:include>
 </div>
 <%--
 	[ SmartEditor 를 사용하기 위한 설정 ]

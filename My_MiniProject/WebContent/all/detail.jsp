@@ -31,20 +31,20 @@
 			
 			<%if(dto.getPrevNum() != 0){ %>
 				<li class="page-item mr-3">
-					<a class="page-link" href="detail.jsp?num=<%=dto.getPrevNum()%>">&larr; Prev</a>
+					<a class="page-link" href="detail.jsp?num=<%=dto.getPrevNum()%>"><</a>
 				</li>
 			<%}else{ %>
 				<li class="page-item disabled mr-3">
-					<a class="page-link" href="javascript:">Prev</a>
+					<a class="page-link" href="javascript:"><</a>
 				</li>	
 			<%} %>
 			<%if(dto.getNextNum() != 0){ %>
 				<li class="page-item">
-					<a class="page-link" href="detail.jsp?num=<%=dto.getNextNum()%>">Next &rarr;</a>
+					<a class="page-link" href="detail.jsp?num=<%=dto.getNextNum()%>">></a>
 				</li>
 			<%}else{ %>
 				<li class="page-item disabled">
-					<a class="page-link" href="javascript:">Next</a>
+					<a class="page-link" href="javascript:">></a>
 				</li>	
 			<%} %>
 			

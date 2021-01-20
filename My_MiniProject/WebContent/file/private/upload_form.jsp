@@ -5,10 +5,19 @@
 <head>
 <meta charset="UTF-8">
 <title>/file/private/upload_form.jsp</title>
+<jsp:include page="../../include/resource.jsp"></jsp:include>
+<style>
+	#con{
+		margin-top:5rem;
+	}
+	.form-group{
+		width:10rem;
+	}
+</style>
 </head>
 <body>
-<div class="container">
-	<h1>파일 업로드 폼입니다.</h1>
+<jsp:include page="../../include/blogbasic.jsp"></jsp:include>
+<div class="container" id="con">
 	<!-- 
 		파일 업로드 폼 작성법
 		1. method="post"
@@ -19,16 +28,19 @@
 		MultipartRequest 객체를 이용해서 추출해야 한다.
 	 -->
 	<form action="upload.jsp" method="post" enctype="multipart/form-data">
-		<div>
+		<div class="form-group">
 			<label for="title">제목</label>
-			<input type="text" name="title" id="title" />
+			<input class="form-control"type="text" name="title" id="title" />
 		</div>
 		<div>
 			<label for="myFile">첨부파일</label>
 			<input type="file" name="myFile" id="myFile" />
 		</div>
-		<button type="submit">업로드</button>
+		<div class="form-inline mb-5 justify-content-start">
+			<button class="btn btn-success btn-xs" type="submit">업로드</button>
+		</div>
 	</form>
+	<jsp:include page="../../include/blogfooter.jsp"></jsp:include>
 </div>
 </body>
 </html>

@@ -24,12 +24,14 @@
 		border: 1px solid #cecece;
 		border-radius: 50%;
 	}
-
+	#con{
+		margin-top:5rem;
+	}
 </style>
 </head>
 <body>
-<div class="container">
-	<h1>가입 정보</h1>
+<jsp:include page="../../include/blogbasic.jsp"></jsp:include>
+<div class="container" id="con">
 	<table class="table table-striped">
 		<colgroup>
 			<col width="150"/>
@@ -53,7 +55,7 @@
 		</tr>
 		<tr>
 			<th>비밀번호</th>
-			<td><a href="pwd_updateform.jsp">수정하기</a></td>
+			<td><a style="color:#5991A8"; href="pwd_updateform.jsp">수정하기</a></td>
 		</tr>
 		<tr>
 			<th>이메일</th>
@@ -64,8 +66,16 @@
 			<td><%=dto.getRegdate()%></td>
 		</tr>
 	</table>
-	<a href="updateform.jsp">개인정보수정</a>
-	<a href="javascript:deleteConfirm()">탈퇴</a>
+	<div class="form-inline mb-5 justify-content-start">	
+		<a href="updateform.jsp">
+			<button class="btn btn-success btn-xs" >수정</button>
+		</a>
+		<a href="javascript:deleteConfirm()">
+			<button class="btn btn-danger btn-xs ml-1" >탈퇴</button>
+		</a>
+		
+	</div>
+	<jsp:include page="../../include/blogfooter.jsp"></jsp:include>
 </div>
 <script>
 	function deleteConfirm(){

@@ -6,15 +6,23 @@
 <meta charset="UTF-8">
 <title>/gallery/private/ajax_form.jsp</title>
 <jsp:include page="../../include/resource.jsp"></jsp:include>
+<style>
+	#con{
+		margin-top:5rem;
+	}
+	.form-group{
+		width:20rem;
+	}
+</style>
 </head>
 <body>
-<div class="container">
-	<jsp:include page="../../include/blogbasic.jsp"></jsp:include>
+<jsp:include page="../../include/blogbasic.jsp"></jsp:include>
+<div class="container" id="con">
 	<form action="insert.jsp" method="post" id="insertForm">
 		<input type="hidden" name="imagePath" id="imagePath" />
-		<div>
+		<div class="form-group">
 			<label for="caption">설명</label>
-			<input type="text" name="caption" id="caption" />
+			<input class="form-control" type="text" name="caption" id="caption" />
 		</div>
 	</form>
 	<form action="ajax_upload.jsp" method="post" id="ajaxForm" enctype="multipart/form-data">
@@ -24,11 +32,10 @@
 			accept=".jpg, .jpeg, .png, .JPG, .JPEG" />
 		</div>
 	</form>
-	<button id="submitBtn">등록</button>
-	
-	<div class="img-wrapper">
-		<img  />
+	<div class="form-inline mb-5 justify-content-start">
+		<button class="btn btn-success btn-xs" id="submitBtn">등록</button>
 	</div>
+	<jsp:include page="../../include/blogfooter.jsp"></jsp:include>
 </div>
 <script src="${pageContext.request.contextPath}/js/jquery-3.5.1.js"></script>
 <!-- jquery form 플러그인 javascript 로딩 -->

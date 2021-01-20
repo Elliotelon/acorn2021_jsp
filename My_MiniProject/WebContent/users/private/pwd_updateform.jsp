@@ -5,26 +5,36 @@
 <head>
 <meta charset="UTF-8">
 <title>users/private/pwd_updateform.jsp</title>
+<jsp:include page="../../include/resource.jsp"></jsp:include>
 </head>
+<style>
+	#con{
+		margin-top:5rem;
+	}
+	.form-group{
+		width:20rem;
+	}
+</style>
 <body>
-<div class="container">
-	<h1>비밀번호 수정 폼</h1>
+<jsp:include page="../../include/blogbasic.jsp"></jsp:include>
+<div class="container" id="con">
 	<form action="pwd_update.jsp" method="post" id="myForm">
-		<div>
+		<div class="form-group">
 			<label for="pwd">기존 비밀번호</label>
-			<input type="password" name="pwd" id="pwd" />
+			<input class="form-control" type="password" name="pwd" id="pwd" />
 		</div>
-		<div>
+		<div class="form-group">
 			<label for="newPwd">새 비밀번호</label>
-			<input type="password" name="newPwd" id="newPwd" />
+			<input class="form-control" type="password" name="newPwd" id="newPwd" />
 		</div>
-		<div>
+		<div class="form-group">
 			<label for="newPwd2">새 비밀번호 확인</label>
-			<input type="password" id="newPwd2" />
+			<input class="form-control" type="password" id="newPwd2" />
 		</div>
-		<button type="submit">수정하기</button>
-		<button type="reset">리셋</button>
+		<button class="btn btn-success btn-xs" type="submit">수정</button>
+		<button class="btn btn-warning btn-xs" type="reset">리셋</button>
 	</form>
+	<jsp:include page="../../include/blogfooter.jsp"></jsp:include>
 </div>
 <script>
 	//폼에 submit 이벤트가 일어났을때 실행할 함수를 등록하고

@@ -105,14 +105,22 @@
 	#con{
 		margin-top:5rem;
 	}
+	.form-control{
+		width:500px;
+	}
 </style>
 </head>
 <body>
 <jsp:include page="../include/blogbasic.jsp"></jsp:include>
 <div class="container" id="con">
-	<a href="private/insertform.jsp">새글 작성</a>
-	<table class="table table-striped">
-		<thead class="table-dark">
+	<%-- 만일 검색 키워드가 존재한다면 몇개의 글이 검색 되었는지 알려준다. --%>
+	<%if(!keyword.equals("")){ %>
+		<div class="alert alert-info" style="width:275px">
+			<strong><%=totalRow %></strong> 개의 자료가 검색 되었습니다.
+		</div>	
+	<%} %>
+	<table class="table table-hover table-sm">
+		<thead>
 			<tr>
 				<th>글번호</th>
 				<th>작성자</th>
@@ -126,62 +134,61 @@
 			<tr>
 				<td><%=tmp.getNum() %></td>
 				<td><%=tmp.getWriter() %></td>
-				<td><a href="detail.jsp?num=<%=tmp.getNum()%>"><%=tmp.getTitle() %></a></td>
+				<td><a style="color:#5991A8"; href="detail.jsp?num=<%=tmp.getNum()%>"><%=tmp.getTitle() %></a></td>
 				<td><%=tmp.getViewCount() %></td>
 				<td><%=tmp.getRegdate() %></td>
 			</tr>
 		<%} %>
 		</tbody>
 	</table>
+	<a href="private/insertform.jsp">
+		<button class="btn btn-success btn-xs float-right" >글쓰기</button>
+	</a>
 	<nav>
 	  <ul class="pagination justify-content-center">
 	  	<%if(startPageNum!=1){ %>
 		  	<li class="page-item">
-		  		<a class="page-link"href="list.jsp?pageNum=<%=startPageNum-1%>&condition=<%=condition%>&keyword=<%=encodedK%>">Prev</a>
+		  		<a class="page-link"href="list.jsp?pageNum=<%=startPageNum-1%>&condition=<%=condition%>&keyword=<%=encodedK%>"><</a>
 		  	</li>	  	
 	  	<%}else{ %>
 	  		<li class="page-item disabled">
-		  		<a class="page-link" href="javascript:">Prev</a>
+		  		<a class="page-link" href="javascript:"><</a>
 		  	</li>
 	  	<%} %>
 	  	<%for(int i=startPageNum; i<=endPageNum; i++) {%>
     		<%if(i==pageNum){ %>
     			<li class="page-item active">
-		    		<a class="page-link" href="list.jsp?pageNum=<%=i %>&condition=<%=condition%>&keyword=<%=encodedK%>"><%=i %></a>
+		    		<a class="page-link" href="list.jsp?pageNum=<%=i %>&condition=<%=condition%>&keyword=<%=encodedK%>"
+		    		style='color:black<%=i==pageNum ? "; background-color:#EAEAEA; border-color:#EAEAEA":""%>'><%=i %></a>
 		    	</li>	
     		<%}else{ %>
     			<li class="page-item">
-		    		<a class="page-link" href="list.jsp?pageNum=<%=i %>&condition=<%=condition%>&keyword=<%=encodedK%>"><%=i %></a>
+		    		<a class="page-link" href="list.jsp?pageNum=<%=i %>&condition=<%=condition%>&keyword=<%=encodedK%>"
+		    		style='color:black';><%=i %></a>
 		    	</li>
 		    <%} %>
 	    <%} %>
 	    <%if(endPageNum<totalPageCount){ %>
 		    <li class="page-item">
-		    	<a class="page-link" href="list.jsp?pageNum=<%=endPageNum+1%>&condition=<%=condition%>&keyword=<%=encodedK%>">Next</a>
+		    	<a class="page-link" href="list.jsp?pageNum=<%=endPageNum+1%>&condition=<%=condition%>&keyword=<%=encodedK%>">></a>
 		    </li>	    
 	    <%}else{ %>
 	    	<li class="page-item disabled">
-		    	<a class="page-link" href="javascript:">Next</a>
+		    	<a class="page-link" href="javascript:">></a>
 		    </li>
 	    <%} %>
 	  </ul>
 	</nav>
-	<form action="list.jsp" method="get">
-		<label for="condition">검색조건</label>
-		<select name="condition" id="condition">
+	<form class="form-inline mb-5" action="list.jsp" method="get">
+		<label class="input-group-text" for="condition">검색조건</label>	
+		<select class="custom-select" name="condition" id="condition">
 			<option value="title_content" <%=condition.equals("title_content")?"selected":"" %>>제목+내용</option>
 			<option value="title"<%=condition.equals("title")?"selected":"" %>>제목</option>
 			<option value="writer"<%=condition.equals("writer")?"selected":"" %>>작성자</option>
 		</select>
-		<input type="text" name="keyword" placeholder="검색어..."  value=<%=keyword %>>
-		<button type="submit">검색</button>
+		<input class="form-control ml-1" type="text" name="keyword" placeholder="검색어..."  value=<%=keyword %>>
+		<button class="form-control btn btn-info btn-xs ml-1" type="submit" >검색</button>
 	</form>
-	<%-- 만일 검색 키워드가 존재한다면 몇개의 글이 검색 되었는지 알려준다. --%>
-	<%if(!keyword.equals("")){ %>
-		<div class="alert alert-success" style="width:275px">
-			<strong><%=totalRow %></strong> 개의 자료가 검색 되었습니다.
-		</div>	
-	<%} %>
 	<jsp:include page="../include/blogfooter.jsp"></jsp:include>
 </div>
 </body>
