@@ -72,7 +72,9 @@
 	          </ul>
 	        </div>
 	        <div class="col-md-4 d-none d-lg-block img-wrapper">
-	          	<img class="card-img-top" src="images/inbag.png"/>
+	        	<a href="${pageContext.request.contextPath}/all/detail.jsp?num=18">        	
+		        	<img class="card-img-top" src="images/inbag.png"/>
+	        	</a>
 	        </div>
 	      </div>
 	    </div>
@@ -88,7 +90,9 @@
 			       	</ul>
 			  	</div>
 			  	<div class="col-md-4 d-none d-lg-block img-wrapper">
-	          		<img class="card-img-top" src="images/inshoe.png"/>
+			  		<a href="${pageContext.request.contextPath}/all/detail.jsp?num=21">
+		          		<img class="card-img-top" src="images/inshoe.png"/>
+			  		</a>
 	        	</div>
 			</div>
 		</div>
