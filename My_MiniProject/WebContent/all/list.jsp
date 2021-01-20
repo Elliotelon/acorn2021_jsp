@@ -77,12 +77,14 @@
 		text-overflow: ellipsis;
 		overflow: hidden;
 	}
+	#con{
+		margin-top:5rem;
+	}
 </style>
 </head>
 <body>
-
-<div class="container">
-	<jsp:include page="../include/blogbasic.jsp"></jsp:include>
+<jsp:include page="../include/blogbasic.jsp"></jsp:include>
+<div class="container" id="con">	
 	<a href="private/ajax_form.jsp">사진 업로드 하러 가기</a>
 	<div class="row">
 		<%

@@ -90,7 +90,9 @@
 <form class="form-signin" action="login.jsp" method="post">
 	<%--원래 가려던 목적지 정보를 url 이라는 파라미터 명으로 전송될수 있도록한다. --%>
 	<input type="hidden" name="url" value="<%=url %>" />
-	<h1 class="h3 mb-3 font-weight-normal">로그인하기</h1>
+	<div class="text-center mb-3">
+        <h1 class="blog-header-logo text-dark">#Login</h1>
+    </div>
 	<label for="id" class="sr-only">아이디</label>
 	<input type="text" id="id" name="id" class="form-control" placeholder="아이디 입력..." value="<%=savedId%>" required autofocus>
 	<label for="pwd" class="sr-only">비밀번호</label>
@@ -100,8 +102,8 @@
 	    <input type="checkbox" name="isSave" value="yes"> 로그인 정보 저장
 	  </label>
 	</div>
-	<button class="btn btn-lg btn-dark btn-block" type="submit">로그인</button>
-	<p class="mt-5 mb-3 text-muted">&copy; 2017-2020</p>
+	<button class="btn btn-lg btn-success btn-block" type="submit">로그인</button>
+	<p class="mt-5 mb-3 text-muted">&copy; 2020-2021</p>
 	<jsp:include page="../include/blogfooter.jsp"></jsp:include>
 </form>
 

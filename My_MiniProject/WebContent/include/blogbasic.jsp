@@ -9,7 +9,7 @@
 		position:relative;
 	}
 </style>
-<div class="topfix">
+<div class="bg-white fixed-top container mb-5">
 	<header class="blog-header py-3">
 	   	<div class="row flex-nowrap justify-content-between align-items-center">
 	      	<div class="col-4 pt-1">
@@ -24,13 +24,13 @@
 	        	</a>
 				<c:choose>
 					<c:when test="${not empty sessionScope.id }">
-						<a class="btn btn-sm btn-outline-dark" href="${pageContext.request.contextPath}/users/private/info.jsp">개인정보</a>
-						<a class="btn btn-sm btn-outline-secondary ml-1" href="${pageContext.request.contextPath}/users/logout.jsp">로그아웃</a>
+						<a class="btn btn-sm btn-outline-info" href="${pageContext.request.contextPath}/users/private/info.jsp">개인정보</a>
+						<a class="btn btn-sm btn-outline-danger ml-1" href="${pageContext.request.contextPath}/users/logout.jsp">로그아웃</a>
 					</c:when>
 					
 					<c:otherwise>
-						<a class="btn btn-sm btn-outline-secondary" href="${pageContext.request.contextPath}/users/signup_form.jsp">회원 가입</a>
-	        			<a class="btn btn-sm btn-outline-dark ml-1" href="${pageContext.request.contextPath}/users/loginform.jsp">로그인</a>
+						<a class="btn btn-sm btn-outline-primary" href="${pageContext.request.contextPath}/users/signup_form.jsp">회원 가입</a>
+	        			<a class="btn btn-sm btn-outline-success ml-1" href="${pageContext.request.contextPath}/users/loginform.jsp">로그인</a>
 					</c:otherwise>
 				</c:choose>
 	        	
@@ -48,7 +48,7 @@
 	      <a class="p-2 text-muted" href="#">About</a>
 	      <a class="p-2 text-muted" href="#">Review</a>
 	      <a class="p-2 text-muted" href="#">Personal Pay</a>
-	      <a class="p-2 text-muted" href="#">Q&A</a>
+	      <a class="p-2 text-muted" href="${pageContext.request.contextPath}/qa/list.jsp">Q&A</a>
 	      <a class="p-2 text-muted" href="#">주문조회</a>
 	    </nav>
 	</div>
