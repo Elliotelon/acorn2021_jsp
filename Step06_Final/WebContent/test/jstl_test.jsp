@@ -9,9 +9,7 @@
 </head>
 <body>
 <h1>JSTL (Jsp Standard Tag Library)</h1>
-<c:forEach var="i" begin="1" end="5">
-	<p>안녕${i}</p>
-</c:forEach>
+<c:forEach var="i" begin="1" end="5">${i}</c:forEach>
 
 <hr/>
 
