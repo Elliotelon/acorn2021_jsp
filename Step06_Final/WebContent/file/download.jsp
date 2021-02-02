@@ -1,24 +1,23 @@
-<%@page import="java.net.URLEncoder"%>
 <%@page import="java.io.BufferedOutputStream"%>
+<%@page import="java.net.URLEncoder"%>
 <%@page import="java.io.FileInputStream"%>
 <%@page import="java.io.File"%>
-<%@page import="test.file.dao.FileDao"%>
 <%@page import="test.file.dto.FileDto"%>
-<%@ page language="java" contentType="binary/octet-stream; charset=UTF-8"
+<%@page import="test.file.dao.FileDao"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
 <%
 	//1. GET 방식 파라미터로 전달되는 다운로드 시켜줄 파일의 번호를 읽어온다.
 	int num=Integer.parseInt(request.getParameter("num"));
 	/*
 	  2. DB 에서 다운로드 시켜줄 파일의 정보를 읽어온다.
-		 어떤 파일명으로 upload 폴더에 저장되어 있는지 => saveFileName
-		 업로드 당시 원본 파일명은 무엇인지 => orgFileName
-		 파일의 사이즈는 어떻게 되는지 => fileSize
-		 -다운로드 시켜주기 위해서는 위의 3가지 정보가 필요하다.
+	          어떤 파일명으로 upload 폴더에 저장되어 있는지 => saveFileName 
+	          업로드 당시 원본 파일명은 무엇인지 => orgFileName
+	          파일의 사이는 어떻게 되는지 => fileSize
+	     - 다운로드 시켜주기 위해서는 위의 3가지 정보가 필요하다.
 	*/
-	FileDto dto=FileDao.getInstance().getData(num);		
-	//3. 서버의 파일시스템(upload) 에 저장된 파일에서 바이트 알갱이를 읽어서 출력한다.(다운로드)
+	FileDto dto=FileDao.getInstance().getData(num);
+	//3. 서버의 파일시스템(upload) 에 저장된 파일에서 바이트 알갱이를 읽어서 출력한다(다운로드)
 	String orgFileName=dto.getOrgFileName();
 	String saveFileName=dto.getSaveFileName();
 	//다운로드 시켜줄 파일의 실제 경로 구성하기 
@@ -65,6 +64,4 @@
 	}
 	//FileInputStream 닫아주기 
 	fis.close();	
-	
-%>
-
+%>    
